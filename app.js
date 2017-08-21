@@ -28,9 +28,30 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static('public'));
+app.use(express.static('./client/node_modules/bootstrap/dist'));
 
 //port setup
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Alive on port ${PORT}`);
 });
+
+// socket io setup
+// array to hold socket connection
+const connections = [];
+
+const io = require('socket.io').listen(server);
+io.sockets.on('connection', (socket) => {
+  socket.once('disconnect', () => {
+    // splicing the index of the disconnected socket
+    connections.splice(connections.indexOf(socket), 1);
+    socket.disconnect();
+    console.log('Disconnected: %s users remaining', connections.length);
+  });
+
+  connections.push(socket);
+  connections.map((socket) => {
+    console.log('Currently connected: ' + socket);
+  });
+});
+
