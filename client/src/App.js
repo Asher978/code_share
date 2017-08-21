@@ -12,7 +12,7 @@ import {
   BrowserRouter as Router,
   Route,
   Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 import io from 'socket.io-client';
 
 class App extends Component {
@@ -47,12 +47,12 @@ class App extends Component {
       <Router >
       <div className="App">
         <Header />
-        <Route exact path= "/" component={Home}/>
-        <Route exact path="/Login" component={Login} />
-        <Route exact path="/Register" component={Register} />
-        <Route exact path="/ChallengesList" component={ChallengesList} />
-        <Route exact path="/EventList" component={EventList} />
-        <Route exact path="/SingleChallenge/:id" component={SingleChallenge} />
+        <Route exact path= "/" component={Login}/>
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/challenges" component={ChallengesList} />
+        <Route path="/events" component={EventList} />
+        <Route exact path="/challenges/:single" component={SingleChallenge} />
         <Footer />
       </div>
       </Router>

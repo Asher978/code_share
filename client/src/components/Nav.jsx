@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-
-class Nav extends Component {
-  render() {
+  const Nav = () => {
     return (
       <nav>
         <ul className="navWide">
           <li><Link to= "/">Home</Link></li>
-          <li><Link to= "/LogIn">Log in</Link></li>
-          <li><Link to= "/Register">Register</Link></li>
-          <li><Link to= "/LogOut">Log out</Link></li>
-          <li><Link to= "/ChallengesList">Challenges List</Link></li>
-          <li><Link to="/EventList">Event List</Link></li>
+          <li><Link to= "/login">Log in</Link></li>
+          <li><Link to= "/register">Register</Link></li>
+          <li><Link to= "/logout">Log out</Link></li>
+          <li><Link to= "/challenges">Challenges</Link></li>
+          <li><Link to="/events">Events</Link></li>
         </ul>
     </nav>
     );
-  };
-}
+  }
 
 export default Nav;
