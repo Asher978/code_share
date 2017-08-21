@@ -51,7 +51,7 @@ io.sockets.on('connection', (socket) => {
 
   connections.push(socket);
   connections.map((socket) => {
-    console.log('Currently connected: ' + socket);
+    console.log('Currently connected: ' + socket.id);
   });
 });
 
