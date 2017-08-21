@@ -1,15 +1,24 @@
 import React from 'react';
+import Nav from './Nav';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
-const Header = () => {
-  return (
-    <nav>
-        <div className="navWide">
-          <a href="#">Log in</a>
-          <a href="#">Register</a>
-          <a href="#">Log out</a>
-        </div>
-    </nav>
-  )
+
+  class Header extends Component {
+  render() {
+    return (
+      <header>
+        <h1>Code-Share</h1>
+        <Nav />
+      </header>
+    );
+  };
 }
+
+
+
 
 export default Header;
