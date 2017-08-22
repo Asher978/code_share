@@ -1,21 +1,63 @@
 import React, { Component } from 'react';
-import Codemirror from 'react-codemirror';  
+import Codemirror from '@skidding/react-codemirror';
 import 'codemirror/lib/codemirror.css';  
 import 'codemirror/theme/monokai.css';  
 import 'codemirror/mode/javascript/javascript.js';
+import io from 'socket.io-client';
 
 class SingleChallenge extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
+    this.socket = io();
     this.state = {
       code: '',
+      status: 'disconnected',
     }
   }
 
-  handleUpdateCodeState = (code) => {
+  componentDidMount() {
+    this.socket.on('connect', this.connect);
+    this.socket.emit('room', {
+      room: this.props.match.params.single,
+    });
+    this.socket.on('coding', (data) => {   
+      this.updateCodeFromSockets(data);
+    });
+  }
+
+  componentWillUnmount() {
+    this.socket.on('disconnect', this.disconnect);
+    this.socket.emit('leave room', {
+      room: this.props.match.params.single,
+    });
+  }
+
+  updateCodeFromSockets = (data) => {
     this.setState({
-      code: code,
+      code: data.code,
+    });
+  }
+
+  handleUpdateCodeState = (text) => {
+    this.setState({
+      code: text,
+    });
+    this.socket.emit('code room', {
+      room: this.props.match.params.single,
+      code: this.state.code, 
+    });
+  }
+
+  connect = () => {
+    this.setState({
+      status: 'connected',
+    });
+  }
+
+  disconnect = () => {
+    this.setState({
+      status: 'disconnected',
     });
   }
 
@@ -25,17 +67,17 @@ class SingleChallenge extends Component {
       mode: 'javascript',
       theme: 'monokai'
     }
-    
+
     return (
-      <Codemirror
-        value={this.state.code}
-        onChange={this.handleUpdateCodeState}
-        options={options} 
-      />
+      <div>
+        <Codemirror
+          value={this.state.code}
+          onChange={this.handleUpdateCodeState}
+          options={options}
+        />
+      </div>
     )
   }
 }
-
-
 
 export default SingleChallenge;
