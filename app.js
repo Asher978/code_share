@@ -55,3 +55,7 @@ io.sockets.on('connection', (socket) => {
   });
 });
 
+// adding events routes
+const eventRoutes = require('./routes/event-routes');
+app.use('/events', eventRoutes);
+
