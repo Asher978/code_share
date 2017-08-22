@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import EventAddForm from './EventAddForm';
 import EventLookUp from './EventLookUp';
+import ApiEventList from './ApiEventList';
 
 class EventList extends Component {
     constructor () {
@@ -12,17 +13,17 @@ class EventList extends Component {
             eventList: null,
             eventListLoaded: false,
         }
+        this.handleEventLookUp = this.handleEventLookUp.bind(this);
     }
 
     componentDidMount() {
         axios.get('/events')
-            .then(res => {
-                // console.log(res.data)
-                this.setState({
+        .then(res => {
+            this.setState({
                 eventData: res.data.data,
                 eventDataLoaded: true,
             });
-        }).catch(err => console.log(err));
+            }).catch(err => console.log(err));
     }
 
     handleEventSubmit(e, title, description, date, time) {
@@ -41,14 +42,12 @@ class EventList extends Component {
 
     handleEventLookUp(e, ZIP) {
         e.preventDefault();
-        // console.log(ZIP)
         axios.post('/meetup', {
             ZIP: ZIP,
         }).then(res => {
-            console.log(res.data.data)
             this.setState({
-                eventList: this.state.eventList,
-                eventListLoaded: true,
+            eventList: res.data.data,
+            eventListLoaded: true,
             })
         }).catch(err => console.log(err));
     }
@@ -70,19 +69,18 @@ class EventList extends Component {
         }
     }
     
-    // TODO: uncomment this when the ApiEventList component is created
-    // renderApiEventList () {
-    //     if(this.state.eventListLoaded) {
-    //         return <ApiEventList ApiEventList={this.state.EventList} />
-    //     }
-    // }
+    renderApiEventList () {
+        if(this.state.eventListLoaded) {
+            return <ApiEventList event={this.state.eventList} />
+        }
+    }
     render () {
-        console.log(this.state.eventData)
         return (
             <div>
                 <EventAddForm handleEventSubmit={this.handleEventSubmit} />
                 <EventLookUp handleEventLookUp={this.handleEventLookUp} />
                 {this.renderEvents()}
+                {this.renderApiEventList()}
             </div>
         )
     }
