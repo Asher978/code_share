@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
+import Home from './components/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Nav from './components/Nav';
-import EventList from './components/EventList';
-import ChallengesList from './components/ChallengesList';
+import Events from './components/EventList';
+import Challenges from './components/ChallengesList';
 import Login from './components/Login';
 import Register from './components/Register';
 import SingleChallenge from './components/SingleChallenge';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import io from 'socket.io-client';
 
 class App extends Component {
@@ -46,14 +42,16 @@ class App extends Component {
     return (
       <Router >
       <div className="App">
-        <Header />
-        <Route exact path= "/" component={Login}/>
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/challenges" component={ChallengesList} />
-        <Route path="/events" component={EventList} />
-        <Route exact path="/challenges/:single" component={SingleChallenge} />
-        <Footer />
+        <div className="none">
+          <Header />
+          <Route exact path= "/" component={Home}/>
+          <Route path="/challenges" component={Challenges} />
+          <Route path="/events" component={Events} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route exact path="/challenges/:single" component={SingleChallenge} />
+          <Footer />
+        </div>
       </div>
       </Router>
     );
