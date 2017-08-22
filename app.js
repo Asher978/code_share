@@ -43,14 +43,28 @@ const io = require('socket.io').listen(server);
 io.sockets.on('connection', (socket) => {
   socket.once('disconnect', () => {
     // splicing the index of the disconnected socket
-    connections.splice(connections.indexOf(socket), 1);
     socket.disconnect();
+    connections.splice(connections.indexOf(socket), 1);
     console.log('Disconnected: %s users remaining', connections.length);
   });
 
   connections.push(socket);
   connections.map((socket) => {
     console.log('Currently connected: ' + socket.id);
+  });
+
+  socket.once('room', (data) => {
+    socket.join(data.room);
+    console.log(socket.id + ' has joined Room ' + data.room);
+  });
+
+  socket.once('leave room', (data) => {
+    socket.leave(data.room);
+    console.log(socket.id + ' has left Room ' + data.room);
+  });
+
+  socket.on('code room', (data) => {
+    socket.broadcast.to(data.room).emit('coding', data);
   });
 });
 
