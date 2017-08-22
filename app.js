@@ -58,3 +58,7 @@ io.sockets.on('connection', (socket) => {
 const eventRoutes = require('./routes/event-routes');
 app.use('/events', eventRoutes);
 
+// routes for meetup and google API
+const meetupRoutes = require('./routes/meetup-routes');
+app.use('/meetup', meetupRoutes);
+

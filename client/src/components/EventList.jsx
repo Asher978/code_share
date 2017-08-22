@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import EventAddForm from './EventAddForm';
-
+import EventLookUp from './EventLookUp';
 
 class EventList extends Component {
     constructor () {
@@ -9,6 +9,8 @@ class EventList extends Component {
         this.state = {
             eventData: null,
             eventDataLoaded: false,
+            eventList: null,
+            eventListLoaded: false,
         }
     }
 
@@ -23,7 +25,7 @@ class EventList extends Component {
         }).catch(err => console.log(err));
     }
 
-    handleMovieSubmit(e, title, description, date, time) {
+    handleEventSubmit(e, title, description, date, time) {
         e.preventDefault();
         axios.post('/events', {
             title,
@@ -33,6 +35,20 @@ class EventList extends Component {
         }).then(res => {
             this.setState({
                 eventData: res.data.data,
+            })
+        }).catch(err => console.log(err));
+    }
+
+    handleEventLookUp(e, ZIP) {
+        e.preventDefault();
+        // console.log(ZIP)
+        axios.post('/meetup', {
+            ZIP: ZIP,
+        }).then(res => {
+            console.log(res.data.data)
+            this.setState({
+                eventList: this.state.eventList,
+                eventListLoaded: true,
             })
         }).catch(err => console.log(err));
     }
@@ -53,11 +69,19 @@ class EventList extends Component {
             </div>
         }
     }
+    
+    // TODO: uncomment this when the ApiEventList component is created
+    // renderApiEventList () {
+    //     if(this.state.eventListLoaded) {
+    //         return <ApiEventList ApiEventList={this.state.EventList} />
+    //     }
+    // }
     render () {
         console.log(this.state.eventData)
         return (
             <div>
-                <EventAddForm handleMovieSubmit={this.handleMovieSubmit} />
+                <EventAddForm handleEventSubmit={this.handleEventSubmit} />
+                <EventLookUp handleEventLookUp={this.handleEventLookUp} />
                 {this.renderEvents()}
             </div>
         )
