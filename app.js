@@ -57,4 +57,8 @@ io.sockets.on('connection', (socket) => {
 // adding events routes
 const eventRoutes = require('./routes/event-routes');
 app.use('/events', eventRoutes);
-
+// routes for auth
+const authRoutes = require('./routes/auth-routes');
+app.use('/auth', authRoutes);
+const userRoutes = require('./routes/user-routes');
+app.use('/user', userRoutes);
