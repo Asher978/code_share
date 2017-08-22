@@ -27,6 +27,7 @@ class App extends Component {
     this.setPage = this.setPage.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
+    this.logOut = this.logOut.bind(this);
   }
 
   setPage(page) {
@@ -40,9 +41,14 @@ class App extends Component {
       case 'home' :
         return <Home />;
       case 'login':
+      if(this.state.auth) {
         return <Login handleLoginSubmit={this.handleLoginSubmit} />
+      }else 
+        break;
       case 'register':
-        return <Register handleRegisterSubmit={this.handleRegisterSubmit} />
+      if(!this.state.auth) {
+        return <Register handleRegisterSubmit={this.handleRegisterSubmit} />        
+      } else return <Home />;
       default:
       break;
     }
@@ -91,13 +97,23 @@ class App extends Component {
       });
     }).catch(err => console.log(err));
   }
+  logOut() {
+    axios.get('/auth/logout')
+      .then(res => {
+        console.log(res);
+        this.setState({
+          auth: false,
+          currentPage: 'home',
+        });
+      }).catch(err => console.log(err));
+  }
 
   render() {
     return (
       <Router >
       <div className="App">
         <div className="none">
-          <Header setPage={this.setPage}/>
+          <Header setPage={this.setPage} logOut={this.logOut}/>
           {this.decideWhichPage()}
           <Route exact path= "/" component={Home}/>
           <Route path="/challenges" component={Challenges} />

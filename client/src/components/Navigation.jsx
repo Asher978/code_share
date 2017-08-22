@@ -38,6 +38,9 @@ class Navigation extends Component {
                 <NavLink><Link to= "/login">Sign In</Link></NavLink>
               </NavItem>
               <NavItem>
+                <NavLink><Link to= "/logout">Log out</Link></NavLink>
+              </NavItem>
+              <NavItem>
                 <NavLink><Link to= "/register">Create an account</Link></NavLink>
               </NavItem>
             </Nav>
