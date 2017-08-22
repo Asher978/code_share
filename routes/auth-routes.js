@@ -1,5 +1,5 @@
 const express = require('express');
-const authRoter = express.Router();
+const authRouter = express.Router();
 const passport = require('../services/auth/local');
 const authHelpers = require('../services/auth/auth-helpers');
 const usersController = require('../controllers/users-controller');
@@ -16,20 +16,20 @@ const usersController = require('../controllers/users-controller');
 //     });
 // });
 
-authRoter.post('/register', usersController.create);
+authRouter.post('/register', usersController.create);
 // users submit their login form
-authRouter.post('/login',passport.authenticate('local',{
+authRouter.post('/login', passport.authenticate('local',{
     successRedirect: '/user',
     failureRedirect: '/auth/login',
     failureFlash: true,
     })
 );
 
-authRoter.get('/logout', (req, res) => {
+authRouter.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
 });
 
 
 
-module.exports = authRoter;
+module.exports = authRouter;
