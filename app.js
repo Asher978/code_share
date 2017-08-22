@@ -28,7 +28,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static('public'));
-app.use(express.static('./client/node_modules/bootstrap/dist'));
 
 //port setup
 const PORT = process.env.PORT || 3001;
