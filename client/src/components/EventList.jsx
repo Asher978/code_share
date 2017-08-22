@@ -23,7 +23,7 @@ class EventList extends Component {
         }).catch(err => console.log(err));
     }
 
-    handleMovieSubmit(e, title, description, date, time) {
+    handleEventSubmit(e, title, description, date, time) {
         e.preventDefault();
         axios.post('/events', {
             title,

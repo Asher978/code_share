@@ -8,6 +8,7 @@ import Challenges from './components/ChallengesList';
 import Login from './components/Login';
 import Register from './components/Register';
 import SingleChallenge from './components/SingleChallenge';
+import Navigation from './components/Navigation';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import io from 'socket.io-client';
 import axios from 'axios';
@@ -15,13 +16,10 @@ import axios from 'axios';
 class App extends Component {
   constructor() {
     super();
-    this.state ={
+    this.state = {
       auth: false,
       user: null,
       currentPage: 'home',
-      currentMovieId: null,
-    }
-    this.state = {
       status: 'disconnected',
     }
     this.setPage = this.setPage.bind(this);
@@ -35,23 +33,6 @@ class App extends Component {
     this.setState({
       currentPage: page,
     })
-  }
-  decideWhichPage() {
-    switch(this.state.currentPage) {
-      case 'home' :
-        return <Home />;
-      case 'login':
-      if(this.state.auth) {
-        return <Login handleLoginSubmit={this.handleLoginSubmit} />
-      }else 
-        break;
-      case 'register':
-      if(!this.state.auth) {
-        return <Register handleRegisterSubmit={this.handleRegisterSubmit} />        
-      } else return <Home />;
-      default:
-      break;
-    }
   }
 
   componentDidMount() {
@@ -71,7 +52,9 @@ class App extends Component {
       status: 'disconnected',
     });
   }
+
   handleLoginSubmit(e, username, password) {
+    console.log('handle login')
     e.preventDefault();
     axios.post('/auth/login', {
       username, 
@@ -83,7 +66,10 @@ class App extends Component {
       });
     }).catch(err => console.log(err));
   }
+
   handleRegisterSubmit(e, username, password, email) {
+    console.log(username, password, email);
+    console.log('handle submit')
     e.preventDefault();
     axios.post('/auth/register', {
       username,
@@ -97,6 +83,25 @@ class App extends Component {
       });
     }).catch(err => console.log(err));
   }
+
+  decideWhichPage() {
+    switch(this.state.currentPage) {
+      case 'home' :
+        return <Home />;
+      case 'login':
+      if(this.state.auth) {
+        return <Login handleLoginSubmit={this.handleLoginSubmit} />
+      }else 
+        break;
+      case 'register':
+      if(!this.state.auth) {
+        return <Register handleRegisterSubmit={this.handleRegisterSubmit} />        
+      } else return <Home />;
+      default:
+      break;
+    }
+  }
+
   logOut() {
     axios.get('/auth/logout')
       .then(res => {
@@ -112,8 +117,7 @@ class App extends Component {
     return (
       <Router >
       <div className="App">
-        <div className="none">
-          <Header setPage={this.setPage} logOut={this.logOut}/>
+          <Navigation setPage={this.setPage} logOut={this.logOut}/>
           {this.decideWhichPage()}
           <Route exact path= "/" component={Home}/>
           <Route path="/challenges" component={Challenges} />
@@ -122,7 +126,6 @@ class App extends Component {
           <Route path="/register" component={Register} />
           <Route exact path="/challenges/:single" component={SingleChallenge} />
           <Footer />
-        </div>
       </div>
       </Router>
     );

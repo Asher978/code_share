@@ -23,7 +23,7 @@ class EventAddForm extends Component {
   render() {
     return (
       <div className="add">
-        <form onSubmit={(e) => this.props.handleMovieSubmit(e, this.state.title, this.state.description, this.state.date, this.state.time)}>
+        <form onSubmit={(e) => this.props.handleEventSubmit(e, this.state.title, this.state.description, this.state.date, this.state.time)}>
           <label> Title
             <input type="text" name="title" placeholder="Title" value={this.state.title} onChange={this.handleInputChange} />
           </label>

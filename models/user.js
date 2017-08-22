@@ -12,8 +12,8 @@ User.findByUserName = userName => {
 User.create = user => {
     return db.one(`
     INSERT INTO users 
-    (username, email, password_digest, firstname, lastname)
-    VALUE ($1, $2, $3)
+    (username, email, password_digest)
+    VALUES ($1, $2, $3)
     RETURNING *
     `, [user.username, user.email, user.password_digest])
     // user.firstname, user.lastname
