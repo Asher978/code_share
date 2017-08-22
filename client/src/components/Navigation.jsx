@@ -26,19 +26,22 @@ class Navigation extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink><Link to= "/">Home</Link></NavLink>
+                <NavLink><Link to= "/" onClick={() => this.props.setPage('home')}>Home</Link></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink><Link to= "/challenges">Challenges</Link></NavLink>
+                <NavLink><Link to= "/challenges" onClick={() => this.props.setPage('challenges')}>Challenges</Link></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink><Link to= "/events">Events</Link></NavLink>
+                <NavLink><Link to= "/events" onClick={() => this.props.setPage('events')}>Events</Link></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink><Link to= "/login">Sign In</Link></NavLink>
+                <NavLink><Link to= "/login" onClick={() => this.props.setPage('login')}>Sign In</Link></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink><Link to= "/register">Create an account</Link></NavLink>
+                <NavLink><Link to= "/logout" onClick={() => this.props.setPage('logout')}>Log out</Link></NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink><Link to= "/register" onClick={() => this.props.setPage('register')}>Create an account</Link></NavLink>
               </NavItem>
             </Nav>
           </Collapse>

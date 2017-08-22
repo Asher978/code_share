@@ -76,3 +76,9 @@ app.use('/events', eventRoutes);
 const meetupRoutes = require('./routes/meetup-routes');
 app.use('/meetup', meetupRoutes);
 
+// routes for auth
+const authRoutes = require('./routes/auth-routes');
+app.use('/auth', authRoutes);
+const userRoutes = require('./routes/user-routes');
+app.use('/user', userRoutes);
+
