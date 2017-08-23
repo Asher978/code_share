@@ -10,11 +10,6 @@ import Register from './components/Register';
 import SingleChallenge from './components/SingleChallenge';
 import Navigation from './components/Navigation';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
-
-class App extends Component {
-
-import io from 'socket.io-client';
 import axios from 'axios';
 
 class App extends Component {
@@ -43,7 +38,8 @@ class App extends Component {
     }).then(res => {
       this.setState({
         auth: res.data.auth,
-        user: res.data.user
+        user: res.data.user,
+        currentPage: 'home',
       });
     }).catch(err => console.log(err));
   }
@@ -67,19 +63,18 @@ class App extends Component {
 
   decideWhichPage() {
     switch(this.state.currentPage) {
-      case 'home' :
+      case 'home':
         return <Home />;
       case 'login':
-      if(this.state.auth) {
-        return <Login handleLoginSubmit={this.handleLoginSubmit} />
-      }else 
-        break;
+        if(!this.state.auth) {
+          return <Login handleLoginSubmit={this.handleLoginSubmit} />;
+      } else return <Home />;
       case 'register':
-      if(!this.state.auth) {
-        return <Register handleRegisterSubmit={this.handleRegisterSubmit} />        
+        if(!this.state.auth) {
+          return <Register handleRegisterSubmit={this.handleRegisterSubmit} />        
       } else return <Home />;
       default:
-      break;
+        break;
     }
   }
 
@@ -99,12 +94,12 @@ class App extends Component {
       <Router >
       <div className="App">
           <Navigation setPage={this.setPage} logOut={this.logOut}/>
-          {this.decideWhichPage()}
+          {this.decideWhichPage()}          
           <Route exact path= "/" component={Home}/>
-          <Route path="/challenges" component={Challenges} />
-          <Route path="/events" component={Events} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
+          <Route exact path="/challenges" component={Challenges} />
+          <Route exact path="/events" component={Events} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
           <Route exact path="/challenges/:single" component={SingleChallenge} />
           <Footer />
       </div>

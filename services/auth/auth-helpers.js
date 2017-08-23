@@ -7,12 +7,12 @@ function comparePass(userPassword, databasePassword) {
 }
 
 function loginRequired(req, res, next) {
-    if (!req.user) return res.redirect('/auth/login');
+    if (!req.user) return res.status(404).json({status:"no user in call"});
     return next();
 }
 
 module.exports = {
     comparePass,
     // loginRedirect,
-    loginRequired,
+    loginRequired
 }
