@@ -50,7 +50,7 @@ io.sockets.on('connection', (socket) => {
 
   connections.push(socket);
   connections.map((socket) => {
-    console.log('Currently connected: ' + socket.id);
+    console.log('Currently connected: ' + socket.id + ' %s users online', connections.length);
   });
 
   socket.once('room', (data) => {
@@ -65,6 +65,11 @@ io.sockets.on('connection', (socket) => {
 
   socket.on('code room', (data) => {
     socket.broadcast.to(data.room).emit('coding', data);
+  });
+
+  socket.on('message chat', (data) => {
+    io.sockets.in(data.room).emit('chat messages', data.message);
+    console.log('message: ' + data.message);
   });
 });
 
