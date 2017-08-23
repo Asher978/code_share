@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Codemirror from '@skidding/react-codemirror';
+import { Container, Row, Col } from 'reactstrap';
+import Chat from './Chat';
 import 'codemirror/lib/codemirror.css';  
 import 'codemirror/theme/monokai.css';  
 import 'codemirror/mode/javascript/javascript.js';
@@ -69,13 +71,21 @@ class SingleChallenge extends Component {
     }
 
     return (
-      <div>
-        <Codemirror
-          value={this.state.code}
-          onChange={this.handleUpdateCodeState}
-          options={options}
-        />
-      </div>
+      <Container>
+        <Row>
+          <Col md="10">
+            <h1>Challenge</h1>
+            <Codemirror
+              value={this.state.code}
+              onChange={this.handleUpdateCodeState}
+              options={options}
+            />
+          </Col>
+          <Col md="2">
+            <Chat />
+          </Col>
+        </Row>
+      </Container>
     )
   }
 }
