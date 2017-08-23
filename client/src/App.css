@@ -33,7 +33,7 @@ div.CodeMirror {
 
 .users { 
   position: fixed;
-  right: 0;
+  right: 1vw;
   padding: 2%; 
   width: 20vw; 
   height: 20vh;
@@ -43,17 +43,21 @@ div.CodeMirror {
 
 .chat { 
   position: fixed;
-  right: 0;
-  padding: 2%; 
+  right: 1vw;
+  top: 40vh; 
   width: 20vw; 
-  height: 70vh;
+  height: 40vh;
   border: 1px solid #ddd;
   overflow: scroll;
 }
 
+.chat ul {
+  padding: 0;
+}
+
 .form-inline {
   position: fixed;
-  right: 0;
+  right: 1vw;
   bottom: 10vh;
 }
 
@@ -69,12 +73,18 @@ div.CodeMirror {
   border-radius: 0;
 }
 
-.messages { 
+.chat li { 
   list-style-type: none; 
   margin: 0; 
-  padding: 0; 
+  padding: 3%;
+  font-size: 0.8em;
+  width: 100%; 
+  background-color: #ecf0f1;
+  border: 1px solid #dfdfdf;
+  word-break: break-all;
 }
 
-.messages li { 
-  padding: 5px 10px; 
+
+::-webkit-scrollbar {
+  display: none;
 }
