@@ -53,13 +53,15 @@ class SingleChallenge extends Component {
   }
 
   // evaluating the code from the editor and setting state of the result
-  handleExecuteCode = (code) => {    
-    axios.post('/code', {
-      code: code,
-    }).then(res => {
-      console.log('frontend received--->', res)
-      // this.setState({ codeResult: res.data.data })
-    }).catch(err => console.log(err));
+  handleExecuteCode = (code) => {
+    if(code) {
+      axios.post('/code', {
+        code: code,
+      }).then(res => {
+        console.log('frontend received--->', res)
+        this.setState({ codeResult: res.data.data })
+      }).catch(err => console.log(err));
+    }    
   }
 
   connect = () => {
@@ -88,9 +90,8 @@ class SingleChallenge extends Component {
           onChange={this.handleUpdateCodeState}
           options={options}
         />
-        {/* <textarea cols='20' rows='10' value={'Result: ' + this.state.codeResult} /> */}
         <button onClick={() => this.handleExecuteCode(this.state.code)}>EXECUTE</button>
-
+        <textarea cols='30' rows='5' value={'Result: ' + this.state.codeResult} />
       </div>
     )
   }
