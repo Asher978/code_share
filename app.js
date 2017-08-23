@@ -76,3 +76,7 @@ app.use('/events', eventRoutes);
 const meetupRoutes = require('./routes/meetup-routes');
 app.use('/meetup', meetupRoutes);
 
+// route for code eval
+const codeRoutes = require('./routes/code-routes');
+app.use('/code', codeRoutes);
+
