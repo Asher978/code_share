@@ -6,8 +6,13 @@ let codeEval = (req, res, next) => {
     let code = req.body.code;
     const sandbox = {};
     vm.createContext(sandbox);
-    result = vm.runInContext(code, sandbox);
-    res.locals.ref = result;
+    try {
+        result = vm.runInContext(code, sandbox);
+        res.locals.ref = result;    
+    } catch (e) {
+        result = 'Your Code returned an error'
+        res.locals.ref = result;
+    }
     next();
 }
 
