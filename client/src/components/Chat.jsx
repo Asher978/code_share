@@ -5,10 +5,17 @@ const Chat = (props) => {
   return (
     <div className="chatbox">
       <div className="users"></div>
-      <div className="chat"></div>
-      <Form inline>
+      <div className="chat">
+        <ul>
+          {props.messages.map((message) => {
+            console.log('blah', message);
+            return <li>{message}</li>
+          })}
+        </ul>
+      </div>
+      <Form onSubmit={(e) => props.handleSubmit(e)} inline>
         <FormGroup>
-          <Input type="text" className="textbox" placeholder="Type Message Here" />
+          <Input type="text" className="textbox" value={props.value} onChange={(e) => props.handleChange(e)} placeholder="Type Message Here" />
           <Button color="primary" className="chatbutton">Send</Button>
         </FormGroup>
       </Form>
