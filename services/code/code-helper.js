@@ -10,7 +10,8 @@ let codeEval = (req, res, next) => {
         result = vm.runInContext(code, sandbox);
         res.locals.ref = result;    
     } catch (e) {
-        result = 'Your Code returned an error'
+        console.log(e.message);
+        result = e.message;
         res.locals.ref = result;
     }
     next();
