@@ -5,6 +5,7 @@ import 'codemirror/theme/monokai.css';
 import 'codemirror/mode/javascript/javascript.js';
 import io from 'socket.io-client';
 import axios from 'axios';
+import fileSaver from 'file-saver';
 
 class SingleChallenge extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class SingleChallenge extends Component {
       code: '',
       status: 'disconnected',
       codeResult: '',
+      fileName: '',
     }
     this.handleExecuteCode = this.handleExecuteCode.bind(this);
   }
@@ -64,6 +66,18 @@ class SingleChallenge extends Component {
     }    
   }
 
+  // handle for saving the user code
+  handleSaveCode = (code, filename) => {
+    console.log(code, filename);
+    let blob = new Blob([code], {type: 'text/javascript'});
+    fileSaver.saveAs(blob, filename+'.js');
+  }
+  
+  // handle for the change on filename input
+  handleSaveCodeChange = (e) => {
+    this.setState({ fileName: e.target.value })
+  }
+
   connect = () => {
     this.setState({
       status: 'connected',
@@ -90,8 +104,13 @@ class SingleChallenge extends Component {
           onChange={this.handleUpdateCodeState}
           options={options}
         />
-        <button onClick={() => this.handleExecuteCode(this.state.code)}>EXECUTE</button>
         <textarea cols='30' rows='5' value={'Result: ' + this.state.codeResult} />
+        <button onClick={() => this.handleExecuteCode(this.state.code)}>EXECUTE</button>
+        <input type="text" value={this.state.fileName} 
+        placeholder="Enter file name"
+        onChange={this.handleSaveCodeChange}/>
+        <button onClick={() => this.handleSaveCode(this.state.code, this.state.fileName)}>
+          Save Code</button>        
       </div>
     )
   }
