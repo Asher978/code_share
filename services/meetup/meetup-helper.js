@@ -7,21 +7,18 @@ const meet_API_KEY = process.env.meet_API_KEY;
 
 // getting lng & lat from GOOGLE API
 let getLngLat = (req, res, next) => {
-    let validZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(req.body.ZIP)
-    if(validZip) {
-        fetch(`https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${req.body.ZIP}&key=${GOOG_API_KEY}`)
-        .then(fetchRes => {
-            return fetchRes.json();
-            next();
-        }).then(jsonRes => {
-            res.locals.lat = jsonRes.results[0].geometry.location.lat;
-            res.locals.lng = jsonRes.results[0].geometry.location.lng;
-            next();
-        }).catch(err => {
-            console.log(err);
-            next();
-        })
-    }   
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${req.body.ZIP}&key=${GOOG_API_KEY}`)
+    .then(fetchRes => {
+        return fetchRes.json();
+        next();
+    }).then(jsonRes => {
+        res.locals.lat = jsonRes.results[0].geometry.location.lat;
+        res.locals.lng = jsonRes.results[0].geometry.location.lng;
+        next();
+    }).catch(err => {
+        console.log(err);
+        next();
+    })
 }
 
 // Passing in lng & lat from GOOGLE-API to MEETUP-API to fetch the events
