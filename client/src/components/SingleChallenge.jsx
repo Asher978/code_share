@@ -1,44 +1,58 @@
 import React, { Component } from 'react';
 import Codemirror from '@skidding/react-codemirror';
+import { Container, Row, Col } from 'reactstrap';
+import Chat from './Chat';
 import 'codemirror/lib/codemirror.css';  
 import 'codemirror/theme/monokai.css';  
 import 'codemirror/mode/javascript/javascript.js';
 import io from 'socket.io-client';
 import axios from 'axios';
 
+const socket = io.connect('http://localhost:3001');
 class SingleChallenge extends Component {
   constructor(props) {
     super(props);
 
-    this.socket = io();
     this.state = {
       code: '',
-      status: 'disconnected',
       codeResult: '',
+      message: '',
+      messages: [],
     }
     this.handleExecuteCode = this.handleExecuteCode.bind(this);
   }
 
   componentDidMount() {
-    this.socket.on('connect', this.connect);
-    this.socket.emit('room', {
-      room: this.props.match.params.single,
+    socket.on('code', (data) => {   
+      this.handleCodeFromSockets(data);
     });
-    this.socket.on('coding', (data) => {   
-      this.updateCodeFromSockets(data);
+
+    socket.on('message', (data) => {
+      this.handleMessageFromSockets(data);
+    });
+
+    socket.emit('join room', {
+      room: this.props.match.params.single,
     });
   }
 
   componentWillUnmount() {
-    this.socket.on('disconnect', this.disconnect);
-    this.socket.emit('leave room', {
+    socket.emit('leave room', {
       room: this.props.match.params.single,
     });
   }
 
-  updateCodeFromSockets = (data) => {
+  handleCodeFromSockets = (data) => {
     this.setState({
       code: data.code,
+    });
+  }
+
+  handleMessageFromSockets = (data) => {
+    const updatedMessages = [...this.state.messages];
+    updatedMessages.push(data);
+    this.setState({
+      messages: updatedMessages,
     });
   }
 
@@ -46,7 +60,7 @@ class SingleChallenge extends Component {
     this.setState({
       code: text,
     });
-    this.socket.emit('code room', {
+    socket.emit('coding', {
       room: this.props.match.params.single,
       code: this.state.code, 
     });
@@ -64,16 +78,17 @@ class SingleChallenge extends Component {
     }    
   }
 
-  connect = () => {
-    this.setState({
-      status: 'connected',
-    });
+  handleUpdateMessageState = (e) => {
+    this.setState({message: e.target.value});
   }
 
-  disconnect = () => {
-    this.setState({
-      status: 'disconnected',
+  handleMessageSubmit = (e) => {
+    e.preventDefault();
+    socket.emit('messaging', {
+      room: this.props.match.params.single,
+      message: this.state.message, 
     });
+    this.setState({message: ''});
   }
 
   render() {
@@ -85,13 +100,27 @@ class SingleChallenge extends Component {
 
     return (
       <div>
-        <Codemirror
-          value={this.state.code}
-          onChange={this.handleUpdateCodeState}
-          options={options}
-        />
-        <button onClick={() => this.handleExecuteCode(this.state.code)}>EXECUTE</button>
-        <textarea cols='30' rows='5' value={'Result: ' + this.state.codeResult} />
+        <Container>
+          <Row>
+            <Col md="10">
+              <h1>Challenge</h1>
+              <Codemirror
+                value={this.state.code}
+                onChange={this.handleUpdateCodeState}
+                options={options}
+              />
+              <button onClick={() => this.handleExecuteCode(this.state.code)}>EXECUTE</button>
+              <textarea cols='30' rows='5' value={'Result: ' + this.state.codeResult} />
+            </Col>
+            <Col md="2">
+              <Chat handleSubmit={this.handleMessageSubmit} 
+                    value={this.state.message} 
+                    handleChange={this.handleUpdateMessageState}
+                    messages={this.state.messages}
+              />
+            </Col>
+          </Row>
+        </Container>
       </div>
     )
   }
