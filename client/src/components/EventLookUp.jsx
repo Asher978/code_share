@@ -21,7 +21,7 @@ class EventLookUp extends Component {
         return (
             <form onSubmit={(e) => this.props.handleEventLookUp(e, this.state.ZIP)}>
             <label> Zip Code
-                <input type="text" name="ZIP" placeholder="ZIP CODE" value={this.state.ZIP} onChange={this.handleEventLookUpChange} />
+                <input type="text" maxLength='5' name="ZIP" placeholder="ZIP CODE" value={this.state.ZIP} onChange={this.handleEventLookUpChange} />
             </label>
             <input type="submit" value="LookUp Event" />
             </form>
