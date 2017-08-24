@@ -9,7 +9,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import SingleChallenge from './components/SingleChallenge';
 import Navigation from './components/Navigation';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 class App extends Component {
@@ -18,6 +18,7 @@ class App extends Component {
     this.state = {
       auth: false,
       user: null,
+      // redirect: false
       currentPage: 'home',
     }
   }
@@ -36,7 +37,9 @@ class App extends Component {
       username, 
       password,
     }).then(res => {
+     console.log(res ,"handlesLoginSubmit");      
       this.setState({
+        // redirect: true,
         auth: res.data.auth,
         user: res.data.user,
         currentPage: 'home',
@@ -56,29 +59,43 @@ class App extends Component {
       this.setState({
         auth: res.data.auth,
         user: res.data.user,
-        currentPage: 'home',
+        currentPage: 'login',
       });
     }).catch(err => console.log(err));
   }
 
   decideWhichPage() {
+    console.log('in decideWhichPage function');
     switch(this.state.currentPage) {
       case 'home':
-        return <Home />;
+        console.log('home page');
+        return <Route exact path= "/" component={Home} />
+      case 'challenges':
+      console.log('challenges page');
+        return <Route exact path="/challenges" component={Challenges} />
+      case 'events':
+      console.log('event page');
+        return <Route exact path="/events" component={Events} />
       case 'login':
-        if(!this.state.auth) {
-          return <Login handleLoginSubmit={this.handleLoginSubmit} />;
-      } else return <Home />;
+      console.log('login page');
+      if(!this.state.auth) {
+      //  return <Route exact path="/login" render={() => (
+        return <Login handleLoginSubmit={this.handleLoginSubmit} />
+        } else return <Route exact path= "/" component={Home} />
       case 'register':
         if(!this.state.auth) {
+          console.log('register page');
           return <Register handleRegisterSubmit={this.handleRegisterSubmit} />        
-      } else return <Home />;
+      } else return <Route path="/login" component={Login} />
+      case 'logout':
+        return (this.logOut());
       default:
         break;
     }
   }
 
   logOut = () => {
+    console.log('logged out');
     axios.get('/auth/logout')
       .then(res => {
         console.log(res);
@@ -89,23 +106,47 @@ class App extends Component {
       }).catch(err => console.log(err));
   }
 
+
   render() {
     return (
       <Router >
       <div className="App">
-          <Navigation setPage={this.setPage} logOut={this.logOut}/>
-          {this.decideWhichPage()}          
-          <Route exact path= "/" component={Home}/>
-          <Route exact path="/challenges" component={Challenges} />
-          <Route exact path="/events" component={Events} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
+          <Navigation setPage={this.setPage} />
+             {this.decideWhichPage()} 
           <Route exact path="/challenges/:single" component={SingleChallenge} />
           <Footer />
       </div>
-      </Router>
+    </Router>
     );
   }
 }
 
 export default App;
+
+
+
+  // return <Login handleLoginSubmit={this.handleLoginSubmit} />
+  //       } 
+  //        return <Route exact path= "/" component={Home} />
+  //       }  
+
+
+  //  return <Route exact path="/login" render={() => (
+  //          this.state.auth ? (
+  //           <Redirect to="/home" />
+  //         ) : (
+  //           <Login handleLoginSubmit={this.handleLoginSubmit} />
+  //         )
+  // login redirect to home 
+  // register redirect to sign in
+
+
+
+
+
+   {/*this.state.auth ? (
+            <Redirect to='/' />
+          ) : (
+            <Login handleLoginSubmit={this.handleLoginSubmit} />
+          )
+        )}/>*/}

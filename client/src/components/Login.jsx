@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor() {
@@ -10,6 +11,7 @@ class Login extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
   handleInputChange(e) {
+     e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
     this.setState({

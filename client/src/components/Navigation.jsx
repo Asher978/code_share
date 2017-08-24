@@ -17,6 +17,8 @@ class Navigation extends Component {
     });
   }
 
+
+
   render() {
     return (
       <div>
@@ -38,7 +40,7 @@ class Navigation extends Component {
                 <NavLink><Link to= "/login" onClick={() => this.props.setPage('login')}>Sign In</Link></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink><Link to= "/logout" onClick={() => this.props.setPage('logout')}>Log out</Link></NavLink>
+                <NavLink><Link to= "/" onClick={() => this.props.setPage('logout')}>Log out</Link></NavLink>
               </NavItem>
               <NavItem>
                 <NavLink><Link to= "/register" onClick={() => this.props.setPage('register')}>Create an account</Link></NavLink>

@@ -17,6 +17,7 @@ class Register extends Component {
   handleInputChange(e) {
     const name = e.target.name;
     const value = e.target.value;
+    const email = e.target.email;
     this.setState({
       [name]: value,
     });
