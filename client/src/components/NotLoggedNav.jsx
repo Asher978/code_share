@@ -17,30 +17,16 @@ class Navigation extends Component {
     });
   }
 
-
-
   render() {
     return (
       <div>
         <Navbar light toggleable>
           <NavbarToggler right onClick={this.toggle} />
-          <NavbarBrand href="/">codeshare</NavbarBrand>
+          <NavbarBrand><Link to= "/" onClick={() => this.props.setPage('home')}>codeshare</Link></NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink><Link to= "/" onClick={() => this.props.setPage('home')}>Home</Link></NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink><Link to= "/challenges" onClick={() => this.props.setPage('challenges')}>Challenges</Link></NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink><Link to= "/events" onClick={() => this.props.setPage('events')}>Events</Link></NavLink>
-              </NavItem>
-              <NavItem>
                 <NavLink><Link to= "/login" onClick={() => this.props.setPage('login')}>Sign In</Link></NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink><Link to= "/" onClick={() => this.props.setPage('logout')}>Log out</Link></NavLink>
               </NavItem>
               <NavItem>
                 <NavLink><Link to= "/register" onClick={() => this.props.setPage('register')}>Create an account</Link></NavLink>
