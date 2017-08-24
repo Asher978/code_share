@@ -8,7 +8,6 @@ const Chat = (props) => {
       <div className="chat">
         <ul>
           {props.messages.map((message) => {
-            console.log('blah', message);
             return <li>{message}</li>
           })}
         </ul>
