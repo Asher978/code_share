@@ -62,15 +62,9 @@ class App extends Component {
     }).catch(err => console.log(err));
   }
 
-  decideWhichPage() {
+  decideAuth() {
     console.log('in decideWhichPage function');
     switch(this.state.currentPage) {
-      case 'home':
-        return <Redirect to="/" />
-      case 'challenges':
-        return <Route exact path="/challenges" component={Challenges} />
-      case 'events':
-        return <Route exact path="/events" component={Events} />
       case 'login':
       if(!this.state.auth) {
         return <Login handleLoginSubmit={this.handleLoginSubmit} />
@@ -78,7 +72,7 @@ class App extends Component {
       case 'register':
         if(!this.state.auth) {
           return <Register handleRegisterSubmit={this.handleRegisterSubmit} />        
-      } else return <Route path="/login" component={Login} />
+      } else return <Redirect to="/login" />
       case 'logout':
         return (this.logOut());
       default:
@@ -104,8 +98,10 @@ class App extends Component {
       <Router >
       <div className="App">
           <Navigation setPage={this.setPage} />
-             {this.decideWhichPage()} 
+             {this.decideAuth()} 
           <Route exact path= "/" component={Home} />
+          <Route exact path="/challenges" component={Challenges} />
+          <Route exact path="/events" component={Events} />
           <Route exact path="/challenges/:single" component={SingleChallenge} />
           <Footer />
       </div>
