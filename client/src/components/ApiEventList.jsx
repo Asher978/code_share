@@ -3,7 +3,6 @@ import * as moment from 'moment';
 import 'moment-duration-format';
 
 const ApiEventList = (props) => {
-    console.log(props)
     return (
         <div>
             {props.event.map((event => {

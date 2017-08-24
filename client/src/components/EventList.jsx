@@ -12,6 +12,7 @@ class EventList extends Component {
             eventDataLoaded: false,
             eventList: null,
             eventListLoaded: false,
+            zipValidation: '',
         }
         this.handleEventLookUp = this.handleEventLookUp.bind(this);
     }
@@ -40,16 +41,26 @@ class EventList extends Component {
         }).catch(err => console.log(err));
     }
 
+    // ZIP Code Validation and Getting data back from google and Meetup
     handleEventLookUp(e, ZIP) {
-        e.preventDefault();
-        axios.post('/meetup', {
-            ZIP: ZIP,
-        }).then(res => {
-            this.setState({
-            eventList: res.data.data,
-            eventListLoaded: true,
-            })
-        }).catch(err => console.log(err));
+        e.preventDefault();        
+        let validZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(ZIP);
+        if (validZip) {
+            axios.post('/meetup', {
+                ZIP: ZIP,
+            }).then(res => {
+                if (res.data.data.length === 0) {
+                    this.setState({eventListLoaded: false, zipValidation: 'INVALID ZIP'})
+                } else {
+                    this.setState({
+                        eventList: res.data.data,
+                        eventListLoaded: true,
+                    })
+                } 
+            }).catch(err => console.log(err));
+        } else {
+            this.setState({ zipValidation: 'ZIP MUST BE 5 NUMBERS' })
+        }
     }
 
     renderEvents () {
@@ -72,8 +83,15 @@ class EventList extends Component {
     renderApiEventList () {
         if(this.state.eventListLoaded) {
             return <ApiEventList event={this.state.eventList} />
+        } else {
+            return (
+                <div>
+                    {this.state.zipValidation}
+                </div>
+            )
         }
     }
+
     render () {
         return (
             <div>
