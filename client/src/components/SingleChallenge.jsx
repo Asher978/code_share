@@ -4,6 +4,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/monokai.css';  
 import 'codemirror/mode/javascript/javascript.js';
 import io from 'socket.io-client';
+import axios from 'axios';
 
 class SingleChallenge extends Component {
   constructor(props) {
@@ -13,7 +14,9 @@ class SingleChallenge extends Component {
     this.state = {
       code: '',
       status: 'disconnected',
+      codeResult: '',
     }
+    this.handleExecuteCode = this.handleExecuteCode.bind(this);
   }
 
   componentDidMount() {
@@ -49,6 +52,18 @@ class SingleChallenge extends Component {
     });
   }
 
+  // evaluating the code from the editor and setting state of the result
+  handleExecuteCode = (code) => {
+    if(code) {
+      axios.post('/code', {
+        code: code,
+      }).then(res => {
+        console.log('frontend received--->', res)
+        this.setState({ codeResult: res.data.data })
+      }).catch(err => console.log(err));
+    }    
+  }
+
   connect = () => {
     this.setState({
       status: 'connected',
@@ -75,6 +90,8 @@ class SingleChallenge extends Component {
           onChange={this.handleUpdateCodeState}
           options={options}
         />
+        <button onClick={() => this.handleExecuteCode(this.state.code)}>EXECUTE</button>
+        <textarea cols='30' rows='5' value={'Result: ' + this.state.codeResult} />
       </div>
     )
   }

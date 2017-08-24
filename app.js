@@ -82,3 +82,7 @@ app.use('/auth', authRoutes);
 const userRoutes = require('./routes/user-routes');
 app.use('/user', userRoutes);
 
+// route for code eval
+const codeRoutes = require('./routes/code-routes');
+app.use('/code', codeRoutes);
+
