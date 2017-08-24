@@ -8,6 +8,7 @@ const passport = require('passport');
 
 // instance of express app
 const app = express();
+const server = require('http').Server(app);
 // requiring .env file
 require('dotenv').config();
 
@@ -31,44 +32,39 @@ app.use(express.static('public'));
 
 //port setup
 const PORT = process.env.PORT || 3001;
-const server = app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Alive on port ${PORT}`);
 });
 
 // socket io setup
+const io = require('socket.io')(server);
 // array to hold socket connection
 const connections = [];
 
-const io = require('socket.io').listen(server);
 io.sockets.on('connection', (socket) => {
-  socket.once('disconnect', () => {
+  connections.push(socket);
+  console.log('Currently connected: ' + socket.id + ' %s users online', connections.length);
+ 
+  socket.on('disconnect', () => {
     // splicing the index of the disconnected socket
-    socket.disconnect();
     connections.splice(connections.indexOf(socket), 1);
     console.log('Disconnected: %s users remaining', connections.length);
   });
 
-  connections.push(socket);
-  connections.map((socket) => {
-    console.log('Currently connected: ' + socket.id + ' %s users online', connections.length);
-  });
-
-  socket.once('room', (data) => {
+  socket.on('join room', (data) => {
     socket.join(data.room);
-    console.log(socket.id + ' has joined Room ' + data.room);
   });
 
-  socket.once('leave room', (data) => {
+  socket.on('leave room', (data) => {
     socket.leave(data.room);
-    console.log(socket.id + ' has left Room ' + data.room);
   });
 
-  socket.on('code room', (data) => {
-    socket.broadcast.to(data.room).emit('coding', data);
+  socket.on('coding', (data) => {
+    socket.broadcast.to(data.room).emit('code', data);
   });
 
-  socket.on('message chat', (data) => {
-    io.sockets.in(data.room).emit('chat messages', data.message);
+  socket.on('messaging', (data) => {
+    io.in(data.room).emit('message', data.message);
     console.log('message: ' + data.message);
   });
 });
