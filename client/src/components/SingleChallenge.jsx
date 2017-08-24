@@ -7,11 +7,11 @@ import 'codemirror/theme/monokai.css';
 import 'codemirror/mode/javascript/javascript.js';
 import io from 'socket.io-client';
 
+const socket = io.connect('http://localhost:3001');
 class SingleChallenge extends Component {
   constructor(props) {
     super(props);
 
-    this.socket = io();
     this.state = {
       code: '',
       status: 'disconnected',
@@ -21,78 +21,60 @@ class SingleChallenge extends Component {
   }
 
   componentDidMount() {
-    this.socket.on('connect', this.connect);
+    socket.on('code', (data) => {   
+      this.handleCodeFromSockets(data);
+    });
 
-    this.socket.emit('room', {
+    socket.on('message', (data) => {
+      this.handleMessageFromSockets(data);
+    });
+
+    socket.emit('join room', {
       room: this.props.match.params.single,
-    });
-
-    this.socket.on('coding', (data) => {   
-      this.updateCodeFromSockets(data);
-    });
-
-    this.socket.on('chat messages', (data) => {
-      this.updateMsgFromSockets(data);
     });
   }
 
   componentWillUnmount() {
-    this.socket.on('disconnect', this.disconnect);
-    this.socket.emit('leave room', {
+    socket.emit('leave room', {
       room: this.props.match.params.single,
     });
   }
 
-  updateCodeFromSockets = (data) => {
+  handleCodeFromSockets = (data) => {
     this.setState({
       code: data.code,
     });
   }
 
-  updateMsgFromSockets = (data) => {
+  handleMessageFromSockets = (data) => {
     const updatedMessages = [...this.state.messages];
     updatedMessages.push(data);
     this.setState({
       messages: updatedMessages,
     });
-    console.log('front-end message update', this.state.messages);
   }
 
   handleUpdateCodeState = (text) => {
     this.setState({
       code: text,
     });
-    this.socket.emit('code room', {
+    socket.emit('coding', {
       room: this.props.match.params.single,
       code: this.state.code, 
     });
   }
 
-  handleSubmit = (e) => {
-    console.log('clicked');
+  handleUpdateMessageState = (e) => {
+    this.setState({message: e.target.value});
+  }
+
+  handleMessageSubmit = (e) => {
     e.preventDefault();
-    this.socket.emit('message chat', {
+    socket.emit('messaging', {
       room: this.props.match.params.single,
       message: this.state.message, 
     });
     this.setState({message: ''});
-  }
-
-  handleChange = (e) => {
-    console.log(e.target.value);
-    this.setState({message: e.target.value});
-  }
-
-  connect = () => {
-    this.setState({
-      status: 'connected',
-    });
-  }
-
-  disconnect = () => {
-    this.setState({
-      status: 'disconnected',
-    });
   }
 
   render() {
@@ -115,9 +97,9 @@ class SingleChallenge extends Component {
             <p>Message: {this.state.message}</p>
           </Col>
           <Col md="2">
-            <Chat handleSubmit={this.handleSubmit} 
+            <Chat handleSubmit={this.handleMessageSubmit} 
                   value={this.state.message} 
-                  handleChange={this.handleChange}
+                  handleChange={this.handleUpdateMessageState}
                   messages={this.state.messages}
             />
           </Col>
