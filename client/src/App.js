@@ -92,10 +92,10 @@ class App extends Component {
    }
 
   logOut = () => {
-    console.log('logged out');
+    // console.log('logged out');
     axios.get('/auth/logout')
       .then(res => {
-        console.log(res);
+        // console.log(res);
         this.setState({
           auth: false,
           currentPage: 'home',

@@ -8,6 +8,9 @@ import 'codemirror/mode/javascript/javascript.js';
 import io from 'socket.io-client';
 import axios from 'axios';
 import fileSaver from 'file-saver';
+// import assert from 'assert';
+import challenge from '../challenge/challenge';
+
 
 const socket = io.connect('http://localhost:3001');
 class SingleChallenge extends Component {
@@ -20,6 +23,7 @@ class SingleChallenge extends Component {
       message: '',
       messages: [],
       fileName: '',
+      test: `${challenge[`${this.props.match.params.single}`-1].test}`,
     }
   }
 
@@ -68,10 +72,10 @@ class SingleChallenge extends Component {
   }
 
   // evaluating the code from the editor and setting state of the result
-  handleExecuteCode = (code) => {
-    if(code) {
+  handleExecuteCode = (code, test) => {
+    if(code + test) {
       axios.post('/code', {
-        code: code,
+        code: code + test,
       }).then(res => {
         console.log('frontend received--->', res)
         this.setState({ codeResult: res.data.data })
@@ -117,12 +121,14 @@ class SingleChallenge extends Component {
           <Row>
             <Col md="10">
               <h1>Challenge</h1>
+              <p>{challenge[`${this.props.match.params.single}`-1].chall}</p>
+              <p>{challenge[`${this.props.match.params.single}`-1].test}</p>
               <Codemirror
                 value={this.state.code}
                 onChange={this.handleUpdateCodeState}
                 options={options}
               />
-              <button onClick={() => this.handleExecuteCode(this.state.code)}>EXECUTE</button>
+              <button onClick={() => this.handleExecuteCode(this.state.code, this.state.test)}>EXECUTE</button>
               <textarea cols='30' rows='5' value={'Result: ' + this.state.codeResult} />
               <input type="text" value={this.state.fileName} 
               placeholder="Enter file name"
