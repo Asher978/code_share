@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import Home from './components/Home';
-import Header from './components/Header';
 import Footer from './components/Footer';
 import Events from './components/EventList';
 import Challenges from './components/ChallengesList';
 import Login from './components/Login';
 import Register from './components/Register';
 import SingleChallenge from './components/SingleChallenge';
-import Navigation from './components/Navigation';
+import MainNav from './components/MainNav';
+import NotLoggedNav from './components/NotLoggedNav';
 import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import axios from 'axios';
 
@@ -80,6 +80,17 @@ class App extends Component {
     }
   }
 
+  decideNav() {
+     switch (this.state.auth) {
+       case true: 
+        return <MainNav setPage={this.setPage} /> 
+       case false:
+        return <NotLoggedNav setPage={this.setPage} />
+       default:
+        break; 
+     }
+   }
+
   logOut = () => {
     // console.log('logged out');
     axios.get('/auth/logout')
@@ -91,14 +102,16 @@ class App extends Component {
         });
       }).catch(err => console.log(err));
   }
+   
+
 
 
   render() {
     return (
       <Router >
       <div className="App">
-          <Navigation setPage={this.setPage} />
-             {this.decideAuth()} 
+          {this.decideNav()}
+          {this.decideAuth()} 
           <Route exact path= "/" component={Home} />
           <Route exact path="/challenges" component={Challenges} />
           <Route exact path="/events" component={Events} />
