@@ -8,7 +8,6 @@ import 'codemirror/mode/javascript/javascript.js';
 import io from 'socket.io-client';
 import axios from 'axios';
 import fileSaver from 'file-saver';
-// import assert from 'assert';
 import challenge from '../challenge/challenge';
 
 
@@ -77,8 +76,13 @@ class SingleChallenge extends Component {
       axios.post('/code', {
         code: code + test,
       }).then(res => {
-        console.log('frontend received--->', res)
-        this.setState({ codeResult: res.data.data })
+        let obj = res.data.data;
+        console.log('frontend received--->', obj)
+        if (obj.__flags) {
+          this.setState({ codeResult: 'Test Passed!' })
+        } else {
+          this.setState({ codeResult: res.data.data })
+        }
       }).catch(err => console.log(err));
     }    
   }
@@ -122,7 +126,6 @@ class SingleChallenge extends Component {
             <Col md="10">
               <h1>Challenge</h1>
               <p>{challenge[`${this.props.match.params.single}`-1].chall}</p>
-              <p>{challenge[`${this.props.match.params.single}`-1].test}</p>
               <Codemirror
                 value={this.state.code}
                 onChange={this.handleUpdateCodeState}

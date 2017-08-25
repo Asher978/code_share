@@ -6,8 +6,8 @@ const challenge = [
     },
     {
         id: 2,
-        chall: 'Testing.... 2',
-        test: 'whatever test.... 2'
+        chall: "Define a variable 'foo', and set its value to a string!",
+        test: "expect(foo).to.be.a('string'); expect(foo).to.equal('bar'); expect(foo).to.have.lengthOf(3);"
     }
 ]
 
