@@ -18,6 +18,7 @@ class App extends Component {
     this.state = {
       auth: false,
       user: null,
+      username: '',
       currentPage: 'home',
     }
   }
@@ -40,6 +41,7 @@ class App extends Component {
       this.setState({
         auth: res.data.auth,
         user: res.data.user,
+        username: res.data.user.username,
         currentPage: 'home',
       });
     }).catch(err => console.log(err));
@@ -83,7 +85,7 @@ class App extends Component {
   decideNav() {
      switch (this.state.auth) {
        case true: 
-        return <MainNav setPage={this.setPage} /> 
+        return <MainNav setPage={this.setPage} user={this.state.username} /> 
        case false:
         return <NotLoggedNav setPage={this.setPage} />
        default:
@@ -103,9 +105,6 @@ class App extends Component {
       }).catch(err => console.log(err));
   }
    
-
-
-
   render() {
     return (
       <Router >
@@ -115,7 +114,7 @@ class App extends Component {
           <Route exact path= "/" component={Home} />
           <Route exact path="/challenges" component={Challenges} />
           <Route exact path="/events" component={Events} />
-          <Route exact path="/challenges/:single" component={SingleChallenge} />
+          <Route exact path="/challenges/:single" component={SingleChallenge} user={this.state.username}/>
           <Footer />
       </div>
     </Router>
