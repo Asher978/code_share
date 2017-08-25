@@ -32,6 +32,9 @@ class Navigation extends Component {
                 <NavLink><Link to= "/challenges" onClick={() => this.props.setPage('challenges')}>Challenges</Link></NavLink>
               </NavItem>
               <NavItem>
+                <NavLink><Link to= "/codeEditor" onClick={() => this.props.setPage('codeEditor')}>CodeEditor</Link></NavLink>
+              </NavItem>
+              <NavItem>
                 <NavLink><Link to= "/events" onClick={() => this.props.setPage('events')}>Events</Link></NavLink>
               </NavItem>
               <NavItem>

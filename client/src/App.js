@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Footer from './components/Footer';
 import Events from './components/EventList';
 import Challenges from './components/ChallengesList';
+import CodeEditor from './components/CodeEditor';
 import Login from './components/Login';
 import Register from './components/Register';
 import SingleChallenge from './components/SingleChallenge';
@@ -91,10 +92,12 @@ decideNav() {
         console.log("if statement")
         return <Login handleLoginSubmit={this.handleLoginSubmit} />
       } 
+      break;
       case 'register':
         if(!this.state.auth) {
           return <Register handleRegisterSubmit={this.handleRegisterSubmit} />        
       } 
+      break;
       case 'logout':
         return (this.logOut());
       default:
@@ -123,6 +126,7 @@ decideNav() {
           {this.decideAuth()} 
           <Route exact path= "/" component={Home} />
           <Route exact path="/challenges" component={Challenges} />
+          <Route exact path="/codeEditor" component={CodeEditor} />          
           <Route exact path="/events" render={(match) => <Events id={this.state.user.id} match={match}/>}/>
           <Route exact path="/challenges/:single" component={SingleChallenge} />
           <Footer />

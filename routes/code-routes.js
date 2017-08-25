@@ -7,4 +7,9 @@ codeRoutes.post('/', codeHelper.codeEval, (req, res) => {res.json({
 }) 
 });
 
+codeRoutes.post('/', codeHelper.codeEvalWithoutChallenge, (req, res) => {res.json({
+    data: res.locals.ref
+})
+});
+
 module.exports = codeRoutes;
