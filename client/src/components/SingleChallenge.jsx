@@ -110,13 +110,14 @@ class SingleChallenge extends Component {
       mode: 'javascript',
       theme: 'monokai'
     }
-
+  
     return (
       <div>
         <Container>
           <Row>
             <Col md="10">
               <h1>Challenge</h1>
+              <p>{this.props.route.user}</p>
               <Codemirror
                 value={this.state.code}
                 onChange={this.handleUpdateCodeState}
