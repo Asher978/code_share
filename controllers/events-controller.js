@@ -34,6 +34,8 @@ eventsController.create = (req, res) => {
         description: req.body.description,
         date: req.body.date,
         time: req.body.time,
+        user_id: req.body.id,
+        user_name: req.body.name,
     })
     .then(event => {
         res.json({

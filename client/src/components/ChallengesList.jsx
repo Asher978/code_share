@@ -9,7 +9,7 @@ class Challenges extends Component {
      {challenge.map(c => {
        return (
          <div id={c.id}>
-            <Link challenge={c} to={`/challenges/${c.id}`}>Challenge # {c.id}</Link>
+            <Link to={`/challenges/${c.id}`}>Challenge # {c.id}</Link>
             <p>{c.chall}</p>
          </div>
        )

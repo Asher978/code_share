@@ -20,6 +20,7 @@ class EventList extends Component {
     componentDidMount() {
         axios.get('/events')
         .then(res => {
+            console.log(res.data.data)
             this.setState({
                 eventData: res.data.data,
                 eventDataLoaded: true,
@@ -27,13 +28,15 @@ class EventList extends Component {
             }).catch(err => console.log(err));
     }
 
-    handleEventSubmit = (e, title, description, date, time) => {
+    handleEventSubmit = (e, title, description, date, time, id, name) => {
         e.preventDefault();
         axios.post('/events', {
             title,
             description,
             date,
             time,
+            id: this.props.id,
+            name: this.props.name,
         }).then(res => {
             this.setState({
                 eventData: res.data.data,
@@ -66,10 +69,10 @@ class EventList extends Component {
     renderEvents () {
         if(this.state.eventDataLoaded) {
             return <div>
-                {this.state.eventData.map((event => {
+                {this.state.eventData.map(((event, index) => {
                     return (
-                        <main key={event.id}>
-                            <h1>Title: {event.title}</h1>
+                        <main key={index}>
+                            <h1>Title: {event.title} <small>Created By: {event.firstname}</small></h1>
                             <p>{event.description}</p>
                             <p>{new Date(event.date).toString().split(" ").splice(0,4).join(" ")}</p>
                             <p>{event.time}</p>
