@@ -86,4 +86,5 @@ app.use('/user', userRoutes);
 // route for code eval
 const codeRoutes = require('./routes/code-routes');
 app.use('/code', codeRoutes);
+app.use('/editor', codeRoutes);
 
