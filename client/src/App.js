@@ -36,13 +36,14 @@ class App extends Component {
       username, 
       password,
     }).then(res => {
-     console.log(res ,"handlesLoginSubmit");      
+     console.log(res ,"handlesLoginSubmit");    
       this.setState({
         auth: res.data.auth,
         user: res.data.user,
         currentPage: 'home',
       });
     }).catch(err => console.log(err));
+  
   }
 
   handleRegisterSubmit = (e, username, password, email) => {
@@ -62,34 +63,43 @@ class App extends Component {
     }).catch(err => console.log(err));
   }
 
-  decideAuth() {
-    console.log('in decideWhichPage function');
-    switch(this.state.currentPage) {
-      case 'login':
-      if(!this.state.auth) {
-        return <Login handleLoginSubmit={this.handleLoginSubmit} />
-        } else return <Redirect to="/" />
-      case 'register':
-        if(!this.state.auth) {
-          return <Register handleRegisterSubmit={this.handleRegisterSubmit} />        
-      } else return <Redirect to="/login" />
-      case 'logout':
-        return (this.logOut());
-      default:
-        break;
-    }
-  }
-
-  decideNav() {
+decideNav() {
      switch (this.state.auth) {
        case true: 
-        return <MainNav setPage={this.setPage} /> 
+       console.log(this.state.auth)
+        return (
+          <div>
+            <MainNav setPage={this.setPage} /> 
+            <Redirect to="/" />
+          </div>
+        )
        case false:
         return <NotLoggedNav setPage={this.setPage} />
        default:
         break; 
      }
    }
+
+  decideAuth() {
+    console.log('in decideWhichPage function');
+    switch(this.state.currentPage) {
+      case 'login':
+      console.log('logged in')
+      if(!this.state.auth) {
+        console.log("if statement")
+        return <Login handleLoginSubmit={this.handleLoginSubmit} />
+      } 
+      case 'register':
+        if(!this.state.auth) {
+          return <Register handleRegisterSubmit={this.handleRegisterSubmit} />        
+      } 
+      case 'logout':
+        return (this.logOut());
+      default:
+        break;
+    }
+  }  
+
 
   logOut = () => {
     console.log('logged out');
@@ -103,9 +113,6 @@ class App extends Component {
       }).catch(err => console.log(err));
   }
    
-
-
-
   render() {
     return (
       <Router >

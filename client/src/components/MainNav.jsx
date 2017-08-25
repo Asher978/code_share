@@ -35,13 +35,7 @@ class Navigation extends Component {
                 <NavLink><Link to= "/events" onClick={() => this.props.setPage('events')}>Events</Link></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink><Link to= "/login" onClick={() => this.props.setPage('login')}>Sign In</Link></NavLink>
-              </NavItem>
-              <NavItem>
                 <NavLink><Link to= "/" onClick={() => this.props.setPage('logout')}>Log out</Link></NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink><Link to= "/register" onClick={() => this.props.setPage('register')}>Create an account</Link></NavLink>
               </NavItem>
             </Nav>
           </Collapse>
