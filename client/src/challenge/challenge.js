@@ -13,8 +13,8 @@ const challenge = [
 
     {
         id: 3,
-        chall: "third test goes here",
-        test: "describe('asher', function() { it('should start empty', function() { var arr = []; assert.equal(arr.length, 0) }); });"
+        chall: "Find the area of a triangle where lengths of the three of its sides are 5, 6, 7",
+        test: "expect(area).to.equal(14.696938456699069);"
     },
 ]
 
