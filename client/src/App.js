@@ -123,7 +123,7 @@ decideNav() {
           {this.decideAuth()} 
           <Route exact path= "/" component={Home} />
           <Route exact path="/challenges" component={Challenges} />
-          <Route exact path="/events" component={Events} />
+          <Route exact path="/events" render={(match) => <Events id={this.state.user.id} match={match}/>}/>
           <Route exact path="/challenges/:single" component={SingleChallenge} />
           <Footer />
       </div>

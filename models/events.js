@@ -3,7 +3,7 @@ const db = require('../db/config');
 const Event = {};
 
 Event.findAll = () => {
-    return db.query('SELECT * FROM events');
+    return db.query('select title, description, date, time, firstname from events join users on users.id = events.user_id');
 }
 
 //find by id
@@ -18,10 +18,10 @@ Event.findById = (id) => {
 Event.create = (event) => {
     return db.one(`
     INSERT INTO events
-    (title, description, date, time)
-    VALUES ($1, $2, $3, $4)
+    (title, description, date, time, user_id)
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING * 
-    `, [event.title, event.description, event.date, event.time]);
+    `, [event.title, event.description, event.date, event.time, event.user_id]);
 }
 
 //editing or updating an event

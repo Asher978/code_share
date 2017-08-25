@@ -16,3 +16,6 @@ CREATE TABLE IF NOT EXISTS users (
     firstname TEXT NOT NULL,
     lastname TEXT NOT NULL
 );
+ALTER TABLE events 
+ADD COLUMN user_id INTEGER REFERENCES users(id);
+
