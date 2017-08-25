@@ -122,7 +122,6 @@ class SingleChallenge extends Component {
             <Col md="10">
               <h1>Challenge</h1>
               <p>{challenge[`${this.props.match.params.single}`-1].chall}</p>
-              <p>{challenge[`${this.props.match.params.single}`-1].test}</p>
               <Codemirror
                 value={this.state.code}
                 onChange={this.handleUpdateCodeState}
