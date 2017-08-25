@@ -10,6 +10,8 @@ usersController.create = (req, res) => {
         username: req.body.username,
         password_digest: hash,
         email: req.body.email,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
     }).then(user => {
         req.login(user, (err) => {
             if (err) return next(err);

@@ -46,14 +46,16 @@ class App extends Component {
   
   }
 
-  handleRegisterSubmit = (e, username, password, email) => {
-    console.log(username, password, email);
+  handleRegisterSubmit = (e, username, password, email, firstname, lastname) => {
+    console.log(username, password, email, firstname, lastname);
     console.log('handle submit')
     e.preventDefault();
     axios.post('/auth/register', {
       username,
       password,
       email,
+      firstname,
+      lastname,
     }).then(res => {
       this.setState({
         auth: res.data.auth,
@@ -102,10 +104,10 @@ decideNav() {
 
 
   logOut = () => {
-    // console.log('logged out');
+    console.log('logged out');
     axios.get('/auth/logout')
       .then(res => {
-        // console.log(res);
+        console.log(res);
         this.setState({
           auth: false,
           currentPage: 'home',
