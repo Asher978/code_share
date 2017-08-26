@@ -1,23 +1,20 @@
 import React from 'react';
-import { Button, Form, FormGroup, Input } from 'reactstrap';
+import Users from './Users';
+import Messages from './Messages';
+import MessageChatForm from './MessageChatForm';
 
 const Chat = (props) => {
   return (
-    <div className="chatbox">
-      <div className="users"></div>
-      <div className="chat">
-        <ul>
-          {props.messages.map((message) => {
-            return <li>{message}</li>
-          })}
-        </ul>
-      </div>
-      <Form onSubmit={(e) => props.handleSubmit(e)} inline>
-        <FormGroup>
-          <Input type="text" className="textbox" value={props.value} onChange={(e) => props.handleChange(e)} placeholder="Type Message Here" />
-          <Button color="primary" className="chatbutton">Send</Button>
-        </FormGroup>
-      </Form>
+    <div className="chat">
+      <Users users={props.users} />
+      <Messages 
+        messages={props.messages}
+        user={props.user} 
+      />
+      <MessageChatForm 
+        handleMessageSubmit={props.handleMessageSubmit} 
+        user={props.user}
+      />
     </div>
   )
 }
