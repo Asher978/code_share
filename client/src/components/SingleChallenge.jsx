@@ -10,7 +10,6 @@ import axios from 'axios';
 import fileSaver from 'file-saver';
 import challenge from '../challenge/challenge';
 
-
 const socket = io.connect('http://localhost:3001');
 class SingleChallenge extends Component {
   constructor(props) {
@@ -19,55 +18,26 @@ class SingleChallenge extends Component {
     this.state = {
       code: '',
       codeResult: '',
-      message: '',
+      text: '',
       messages: [],
+      users: [],
       fileName: '',
       test: `${challenge[`${this.props.match.params.single}`-1].test}`,
     }
   }
 
-  componentDidMount() {
-    socket.on('code', (data) => {   
-      this.handleCodeFromSockets(data);
-    });
+  // componentDidMount() {
+  //   socket.on('init', this.initialize);
+  //   socket.on('send message', this.handleMessages);
+  //   socket.on('join', this.handleJoinUser);
+  //   socket.on('leave', this.handleLeaveUser);
+  // }
 
-    socket.on('message', (data) => {
-      this.handleMessageFromSockets(data);
-    });
-
-    socket.emit('join room', {
-      room: this.props.match.params.single,
-    });
-  }
-
-  componentWillUnmount() {
-    socket.emit('leave room', {
-      room: this.props.match.params.single,
-    });
-  }
-
-  handleCodeFromSockets = (data) => {
-    this.setState({
-      code: data.code,
-    });
-  }
-
-  handleMessageFromSockets = (data) => {
-    const updatedMessages = [...this.state.messages];
-    updatedMessages.push(data);
-    this.setState({
-      messages: updatedMessages,
-    });
-  }
-
-  handleUpdateCodeState = (text) => {
-    this.setState({
-      code: text,
-    });
-    socket.emit('coding', {
-      room: this.props.match.params.single,
-      code: this.state.code, 
-    });
+  handleMessageSubmit = (message) => {
+    const messages = this.state.messages;
+    messages.push(message);
+    console.log(messages);
+    this.setState({messages: messages});
   }
 
   // evaluating the code from the editor and setting state of the result
@@ -87,10 +57,6 @@ class SingleChallenge extends Component {
     }    
   }
 
-
-  handleUpdateMessageState = (e) => {
-    this.setState({message: e.target.value});
-  }
   // handle for saving the user code
   handleSaveCode = (code, filename) => {
     console.log(code, filename);
@@ -103,22 +69,13 @@ class SingleChallenge extends Component {
     this.setState({ fileName: e.target.value })
   }
 
-  handleMessageSubmit = (e) => {
-    e.preventDefault();
-    socket.emit('messaging', {
-      room: this.props.match.params.single,
-      message: this.state.message, 
-    });
-    this.setState({message: ''});
-  }
-
   render() {
     const options = {
       lineNumbers: true,
       mode: 'javascript',
       theme: 'monokai'
     }
-
+    {console.log(this.props.user)}
     return (
       <div>
         <Container>
@@ -133,17 +90,21 @@ class SingleChallenge extends Component {
               />
               <button onClick={() => this.handleExecuteCode(this.state.code, this.state.test)}>EXECUTE</button>
               <textarea cols='30' rows='5' value={'Result: ' + this.state.codeResult} />
-              <input type="text" value={this.state.fileName} 
-              placeholder="Enter file name"
-              onChange={this.handleSaveCodeChange}/>
+              <input 
+                type="text" value={this.state.fileName} 
+                placeholder="Enter file name"
+                onChange={this.handleSaveCodeChange}/>
               <button onClick={() => this.handleSaveCode(this.state.code, this.state.fileName)}>
               Save Code</button>  
             </Col>
             <Col md="2">
-              <Chat handleSubmit={this.handleMessageSubmit} 
-                    value={this.state.message} 
-                    handleChange={this.handleUpdateMessageState}
-                    messages={this.state.messages}
+              <Chat 
+                handleMessageSubmit={this.handleMessageSubmit} 
+                value={this.state.message} 
+                handleChange={this.handleUpdateMessageState}
+                messages={this.state.messages}
+                users={this.state.users}
+                user={this.props.user}
               />
             </Col>
           </Row>
@@ -154,3 +115,61 @@ class SingleChallenge extends Component {
 }
 
 export default SingleChallenge;
+
+
+// componentDidMount() {
+  //   socket.on('code', (data) => {   
+  //     this.handleCodeFromSockets(data);
+  //   });
+
+  //   socket.on('message', (data) => {
+  //     this.handleMessageFromSockets(data);
+  //   });
+
+  //   socket.emit('join room', {
+  //     room: this.props.match.params.single,
+  //   });
+  // }
+
+  // componentWillUnmount() {
+  //   socket.emit('leave room', {
+  //     room: this.props.match.params.single,
+  //   });
+  // }
+
+  // handleCodeFromSockets = (data) => {
+  //   this.setState({
+  //     code: data.code,
+  //   });
+  // }
+
+  // handleMessageFromSockets = (data) => {
+  //   const updatedMessages = [...this.state.messages];
+  //   updatedMessages.push(data);
+  //   this.setState({
+  //     messages: updatedMessages,
+  //   });
+  // }
+
+  // handleUpdateCodeState = (text) => {
+  //   this.setState({
+  //     code: text,
+  //   });
+  //   socket.emit('coding', {
+  //     room: this.props.match.params.single,
+  //     code: this.state.code, 
+  //   });
+  // }
+
+  // handleMessageSubmit = (e) => {
+  //   e.preventDefault();
+  //   socket.emit('messaging', {
+  //     room: this.props.match.params.single,
+  //     message: this.state.message, 
+  //   });
+  //   this.setState({message: ''});
+  // }
+
+  // handleUpdateMessageState = (e) => {
+  //   this.setState({message: e.target.value});
+  // }

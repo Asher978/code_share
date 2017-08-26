@@ -128,7 +128,7 @@ decideNav() {
           <Route exact path="/challenges" component={Challenges} />
           <Route exact path="/codeEditor" component={CodeEditor} />          
           <Route exact path="/events" render={(match) => <Events id={this.state.user.id} match={match}/>}/>
-          <Route exact path="/challenges/:single" component={SingleChallenge} />
+          <Route exact path="/challenges/:single" render={(props) => <SingleChallenge user={this.state.user.username} {...props}/>} />
           <Footer />
       </div>
     </Router>
