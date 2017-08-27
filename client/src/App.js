@@ -72,7 +72,7 @@ decideNav() {
        console.log(this.state.auth)
         return (
           <div>
-            <MainNav setPage={this.setPage} /> 
+            <MainNav setPage={this.setPage} user={this.state.user.username}/> 
             <Redirect to="/" />
           </div>
         )
@@ -123,12 +123,14 @@ decideNav() {
       <Router >
       <div className="App">
           {this.decideNav()}
-          {this.decideAuth()} 
-          <Route exact path= "/" component={Home} />
-          <Route exact path="/challenges" component={Challenges} />
-          <Route exact path="/codeEditor" component={CodeEditor} />          
-          <Route exact path="/events" render={(match) => <Events id={this.state.user.id} match={match}/>}/>
-          <Route exact path="/challenges/:single" render={(props) => <SingleChallenge user={this.state.user.username} {...props}/>} />
+            <div className="main-components">
+              {this.decideAuth()} 
+              <Route exact path= "/" component={Home} />
+              <Route exact path="/challenges" component={Challenges} />
+              <Route exact path="/codeEditor" component={CodeEditor} />          
+              <Route exact path="/events" render={(match) => <Events id={this.state.user.id} match={match}/>}/>
+              <Route exact path="/challenges/:single" render={(props) => <SingleChallenge user={this.state.user.username} {...props}/>} />
+            </div>
           <Footer />
       </div>
     </Router>
