@@ -1,4 +1,4 @@
-.main {
+.main, .jumbotron {
   height: 80vh;
   background-image: url('./images/bwcollab.jpg');
   background-size: cover;
@@ -6,6 +6,18 @@
   color: #FFF;
   margin-top: 1vh;
   border-radius: 0px;
+}
+
+.main h1 {
+  font-size: 7vw;
+}
+
+.main p, .main button {
+  font-size: 2vh;
+}
+
+.content {
+  margin-top: 20vh;
 }
 
 .main-components {
@@ -20,24 +32,8 @@
   z-index: 999;
 }
 
-.content {
-  margin-top: 30vh;
-}
-
 .nav-item {
   position: relative;
-}
-
-.up {
-  display: none;
-  transition: 500ms ease-in-out;
-}
-
-.dropdown {
-  position: absolute;
-  z-index: 999;
-  right: 0;
-  transition: 500ms ease-in-out;
 }
 
 .user {
@@ -52,11 +48,20 @@ div.container {
   margin: 0;
 }
 
+.main-challenge {
+  width: 100%;
+  margin-left: 2vw;
+}
+
 div.CodeMirror {
-  margin: 5.5% 2%;
+  margin: 5.5% 2% 0 0;
   height: 71.5vh;
-  width: 72vw;
+  width: 100%;
   font-size: 1.3em;
+}
+
+.alert {
+  width: 100%;
 }
 
 .users { 
@@ -70,7 +75,7 @@ div.CodeMirror {
 
 .chat { 
   position: fixed;
-  right: 1vw;
+  right: 3vw;
   top: 10vh; 
   width: 20vw; 
   height: 70vh;
@@ -87,7 +92,7 @@ div.CodeMirror {
 
 .form-inline {
   position: fixed;
-  right: 1vw;
+  right: 4vw;
   bottom: 10vh;
 }
 
@@ -104,6 +109,10 @@ div.CodeMirror {
   background-color: #ecf0f1;
   border: 1px solid #dfdfdf;
   word-break: break-all;
+}
+
+.result {
+  background-color: #272822;
 }
 
 ::-webkit-scrollbar {
