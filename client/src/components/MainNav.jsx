@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { 
+  Collapse, 
+  Navbar,
+  NavbarToggler, 
+  NavbarBrand, 
+  Nav, 
+  NavItem, 
+  NavLink, 
+  NavDropdown,
+  DropdownToggle, 
+  DropdownMenu,
+  DropdownItem,
+} from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 class Navigation extends Component {
@@ -7,13 +19,15 @@ class Navigation extends Component {
     super(props);
 
     this.state = {
-      isOpen: false
+      isOpen: false,
+      dropdownOpen: false,
     };
   }
-  // toggle hamburger menu
+  
   toggle = () => {
     this.setState({
-      isOpen: !this.state.isOpen
+      isOpen: !this.state.isOpen,
+      dropdownOpen: !this.state.dropdownOpen
     });
   }
 
@@ -38,8 +52,16 @@ class Navigation extends Component {
                 <NavLink><Link to= "/events" onClick={() => this.props.setPage('events')}>Events</Link></NavLink>
               </NavItem>
               <NavItem>
-                <NavLink><Link to= "/" onClick={() => this.props.setPage('logout')}>Log out</Link></NavLink>
+                <NavLink></NavLink>
               </NavItem>
+              <NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                <DropdownToggle nav caret>
+                  Hi, {this.props.user}
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem className="dropdown"><Link to= "/" onClick={() => this.props.setPage('logout')}>Log out</Link></DropdownItem>
+                </DropdownMenu>
+            </NavDropdown>
             </Nav>
           </Collapse>
         </Navbar>
