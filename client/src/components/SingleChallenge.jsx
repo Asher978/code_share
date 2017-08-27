@@ -92,14 +92,22 @@ class SingleChallenge extends Component {
       mode: 'javascript',
       theme: 'monokai'
     }
+<<<<<<< HEAD
     {console.log(this.props.user)}
+=======
+  
+>>>>>>> user
     return (
       <div>
         <Container>
           <Row>
             <Col md="10">
               <h1>Challenge</h1>
+<<<<<<< HEAD
               <p>{challenge[`${this.props.match.params.single}`-1].chall}</p>
+=======
+              <p>{this.props.route.user}</p>
+>>>>>>> user
               <Codemirror
                 value={this.state.code}
                 onChange={this.handleUpdateCodeState}

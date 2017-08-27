@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { 
+  Collapse, 
+  Navbar, 
+  NavbarToggler, 
+  NavbarBrand, 
+  Nav, 
+  NavItem, 
+  NavLink,
+} from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 class Navigation extends Component {
@@ -7,14 +15,32 @@ class Navigation extends Component {
     super(props);
 
     this.state = {
-      isOpen: false
+      isOpen: false,
+      dropdownToggle: false,
+      class: 'up',
     };
   }
-  // toggle hamburger menu
+  
   toggle = () => {
     this.setState({
-      isOpen: !this.state.isOpen
+      isOpen: !this.state.isOpen,
     });
+  }
+
+  openClose = () => {
+    if(!this.state.dropdownToggle) {
+      console.log('test');
+      this.setState({
+        dropdownToggle: true,
+        class: 'dropdown',
+      })
+    } else {
+      console.log('test 2')
+      this.setState({
+        dropdownToggle: false,
+        class: 'up',
+      })
+    }
   }
 
   render() {
@@ -35,10 +61,17 @@ class Navigation extends Component {
                 <NavLink><Link to= "/codeEditor" onClick={() => this.props.setPage('codeEditor')}>CodeEditor</Link></NavLink>
               </NavItem>
               <NavItem>
+<<<<<<< HEAD
                 <NavLink><Link to= "/events" onClick={() => this.props.setPage('events')}>Events</Link></NavLink>
               </NavItem>
               <NavItem>
                 <NavLink><Link to= "/" onClick={() => this.props.setPage('logout')}>Log out</Link></NavLink>
+=======
+                <NavLink className="user" onClick={() => this.openClose()}>Hi, {this.props.user}</NavLink>
+                <NavItem className={this.state.class}>
+                  <Link to= "/" onClick={() => this.props.setPage('logout')}>Logout</Link>
+                </NavItem>
+>>>>>>> user
               </NavItem>
             </Nav>
           </Collapse>

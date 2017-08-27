@@ -19,6 +19,7 @@ class App extends Component {
     this.state = {
       auth: false,
       user: null,
+      username: '',
       currentPage: 'home',
     }
   }
@@ -41,6 +42,7 @@ class App extends Component {
       this.setState({
         auth: res.data.auth,
         user: res.data.user,
+        username: res.data.user.username,
         currentPage: 'home',
       });
     }).catch(err => console.log(err));
@@ -105,6 +107,16 @@ decideNav() {
     }
   }  
 
+  decideNav() {
+     switch (this.state.auth) {
+       case true: 
+        return <MainNav setPage={this.setPage} user={this.state.username} /> 
+       case false:
+        return <NotLoggedNav setPage={this.setPage} />
+       default:
+        break; 
+     }
+   }
 
   logOut = () => {
     console.log('logged out');
@@ -122,14 +134,16 @@ decideNav() {
     return (
       <Router >
       <div className="App">
-          {this.decideNav()}
+        {this.decideNav()}
+        <div className="main-components">
           {this.decideAuth()} 
           <Route exact path= "/" component={Home} />
           <Route exact path="/challenges" component={Challenges} />
           <Route exact path="/codeEditor" component={CodeEditor} />          
           <Route exact path="/events" render={(match) => <Events id={this.state.user.id} match={match}/>}/>
           <Route exact path="/challenges/:single" render={(props) => <SingleChallenge user={this.state.user.username} {...props}/>} />
-          <Footer />
+        </div>  
+        <Footer />
       </div>
     </Router>
     );
