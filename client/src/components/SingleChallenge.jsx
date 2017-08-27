@@ -105,6 +105,7 @@ class SingleChallenge extends Component {
                 messages={this.state.messages}
                 users={this.state.users}
                 user={this.props.user}
+                online={this.state.users.length}
               />
             </Col>
           </Row>

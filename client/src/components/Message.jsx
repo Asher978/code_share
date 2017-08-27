@@ -1,10 +1,20 @@
 import React from 'react';
+import {
+  ListGroup,
+  ListGroupItem,
+} from 'reactstrap';
 
 const Message = (props) => {
   return (
     <div className="message">
-      <strong>{props.user}: </strong>
-      <em>{props.text}</em>
+      <ListGroup>
+        <ListGroupItem>
+          <span>
+            <strong>{props.user}: </strong>
+            <em>{props.text}</em>
+          </span>
+        </ListGroupItem>
+      </ListGroup>
     </div>
   )
 }
