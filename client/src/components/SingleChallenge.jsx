@@ -26,18 +26,35 @@ class SingleChallenge extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   socket.on('init', this.initialize);
-  //   socket.on('send message', this.handleMessages);
+  componentWillMount() {
+    this.props.user ? 
+      socket.emit('user join', this.props.user) : 
+    console.log('Null user');
+  }
+
+  componentDidMount() {
+    socket.on('user join', this.handleUsers);
+    socket.on('message', this.handleRecievedMessages);
   //   socket.on('join', this.handleJoinUser);
   //   socket.on('leave', this.handleLeaveUser);
-  // }
+  }
+
+  handleUsers = (users) => {
+    this.setState({users: users}); 
+  }
+
+  handleRecievedMessage = (message) => {
+    let messages = this.state.messages;
+    messages.push(message);
+    this.setState({messages: messages});
+  }
 
   handleMessageSubmit = (message) => {
-    const messages = this.state.messages;
+    let messages = this.state.messages;
     messages.push(message);
     console.log(messages);
     this.setState({messages: messages});
+    socket.emit('send message', message);
   }
 
   // evaluating the code from the editor and setting state of the result

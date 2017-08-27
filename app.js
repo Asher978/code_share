@@ -36,39 +36,6 @@ server.listen(PORT, () => {
     console.log(`Alive on port ${PORT}`);
 });
 
-// socket io setup
-const io = require('socket.io')(server);
-// array to hold socket connection
-const connections = [];
-
-io.sockets.on('connection', (socket) => {
-  connections.push(socket);
-  console.log('Currently connected: ' + socket.id + ' %s users online', connections.length);
- 
-  socket.on('disconnect', () => {
-    // splicing the index of the disconnected socket
-    connections.splice(connections.indexOf(socket), 1);
-    console.log('Disconnected: %s users remaining', connections.length);
-  });
-
-  socket.on('join room', (data) => {
-    socket.join(data.room);
-  });
-
-  socket.on('leave room', (data) => {
-    socket.leave(data.room);
-  });
-
-  socket.on('coding', (data) => {
-    socket.broadcast.to(data.room).emit('code', data);
-  });
-
-  socket.on('messaging', (data) => {
-    io.in(data.room).emit('message', data.message);
-    console.log('message: ' + data.message);
-  });
-});
-
 // adding events routes
 const eventRoutes = require('./routes/event-routes');
 app.use('/events', eventRoutes);
@@ -88,3 +55,55 @@ const codeRoutes = require('./routes/code-routes');
 app.use('/code', codeRoutes);
 app.use('/editor', codeRoutes);
 
+// socket io setup
+const io = require('socket.io')(server);
+const users = [];
+io.on('connection', (socket) => {
+  console.log('A new connection', socket.id);
+
+  socket.on('send message', (data) => {
+    console.log('user', data.user, 'text', data.text);
+    io.emit('message', {
+      user: data.user,
+      text: data.text,
+    });
+  });
+
+  socket.on('user join', (user) => {
+    users.push(user);
+    console.log(users);
+    io.emit('user join', users);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User left', socket.id);
+  });
+})
+
+// io.sockets.on('connection', (socket) => {
+//   connections.push(socket);
+//   console.log('Currently connected: ' + socket.id + ' %s users online', connections.length);
+ 
+//   socket.on('disconnect', () => {
+//     // splicing the index of the disconnected socket
+//     connections.splice(connections.indexOf(socket), 1);
+//     console.log('Disconnected: %s users remaining', connections.length);
+//   });
+
+//   socket.on('join room', (data) => {
+//     socket.join(data.room);
+//   });
+
+//   socket.on('leave room', (data) => {
+//     socket.leave(data.room);
+//   });
+
+//   socket.on('coding', (data) => {
+//     socket.broadcast.to(data.room).emit('code', data);
+//   });
+
+//   socket.on('messaging', (data) => {
+//     io.in(data.room).emit('message', data.message);
+//     console.log('message: ' + data.message);
+//   });
+// });
