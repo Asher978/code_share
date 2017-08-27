@@ -107,17 +107,6 @@ decideNav() {
     }
   }  
 
-  decideNav() {
-     switch (this.state.auth) {
-       case true: 
-        return <MainNav setPage={this.setPage} user={this.state.username} /> 
-       case false:
-        return <NotLoggedNav setPage={this.setPage} />
-       default:
-        break; 
-     }
-   }
-
   logOut = () => {
     console.log('logged out');
     axios.get('/auth/logout')
@@ -139,8 +128,8 @@ decideNav() {
           {this.decideAuth()} 
           <Route exact path= "/" component={Home} />
           <Route exact path="/challenges" component={Challenges} />
-          <Route exact path="/codeEditor" component={CodeEditor} />          
-          <Route exact path="/events" render={(match) => <Events id={this.state.user.id} match={match}/>}/>
+          <Route exact path="/codeEditor" render={(props) => <CodeEditor user={this.state.user.username} {...props}/>} />         
+          <Route exact path="/events" render={(match) => <Events id={this.state.user.id} match={match}/>} />
           <Route exact path="/challenges/:single" render={(props) => <SingleChallenge user={this.state.user.username} {...props}/>} />
         </div>  
         <Footer />
