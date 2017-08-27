@@ -38,9 +38,11 @@ class Chat extends Component {
   render() {
     return (
       <div className="chat">
+        <ListGroup className="online">
+          <ListGroupItem color="success">Online Users ({this.props.online})</ListGroupItem>
+        </ListGroup>
         <div className="users">
           <ListGroup>
-            <ListGroupItem color="success">Online Users ({this.props.online})</ListGroupItem>
             {this.props.users.map((user, i) => {
               return <ListGroupItem key={i}>{user}</ListGroupItem>
             })}   
