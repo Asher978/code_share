@@ -58,21 +58,32 @@ app.use('/editor', codeRoutes);
 // socket io setup
 const io = require('socket.io')(server);
 const users = [];
+const messages = [];
 io.on('connection', (socket) => {
   console.log('A new connection', socket.id);
 
-  socket.on('send message', (data) => {
-    console.log('user', data.user, 'text', data.text);
+  socket.on('send message', (message) => {
+    messages.push(message);
     io.emit('message', {
-      user: data.user,
-      text: data.text,
+      user: message.user,
+      text: message.text,
     });
   });
 
   socket.on('user join', (user) => {
-    users.push(user);
-    console.log(users);
+    if (users.indexOf(user) === -1) {
+      users.push(user);
+      console.log(users);
+    } else console.log('already exist');  
     io.emit('user join', users);
+  });
+
+  socket.on('coding', (code) => {
+    socket.broadcast.emit('code', code);
+  });
+
+  socket.on('test check', (result) => {
+    io.emit('checked', result);
   });
 
   socket.on('disconnect', () => {
