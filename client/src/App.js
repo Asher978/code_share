@@ -74,7 +74,7 @@ decideNav() {
        console.log(this.state.auth)
         return (
           <div>
-            <MainNav setPage={this.setPage} /> 
+            <MainNav setPage={this.setPage} user={this.state.user.username}/> 
             <Redirect to="/" />
           </div>
         )

@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { 
   Collapse, 
-  Navbar, 
+  Navbar,
   NavbarToggler, 
   NavbarBrand, 
   Nav, 
   NavItem, 
-  NavLink,
+  NavLink, 
+  NavDropdown,
+  DropdownToggle, 
+  DropdownMenu,
+  DropdownItem,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -65,6 +69,7 @@ class Navigation extends Component {
                 <NavLink><Link to= "/events" onClick={() => this.props.setPage('events')}>Events</Link></NavLink>
               </NavItem>
               <NavItem>
+<<<<<<< HEAD
                 <NavLink><Link to= "/" onClick={() => this.props.setPage('logout')}>Log out</Link></NavLink>
 =======
                 <NavLink className="user" onClick={() => this.openClose()}>Hi, {this.props.user}</NavLink>
@@ -72,7 +77,18 @@ class Navigation extends Component {
                   <Link to= "/" onClick={() => this.props.setPage('logout')}>Logout</Link>
                 </NavItem>
 >>>>>>> user
+=======
+                <NavLink></NavLink>
+>>>>>>> users
               </NavItem>
+              <NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                <DropdownToggle nav caret>
+                  Hi, {this.props.user}
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem className="dropdown"><Link to= "/" onClick={() => this.props.setPage('logout')}>Log out</Link></DropdownItem>
+                </DropdownMenu>
+            </NavDropdown>
             </Nav>
           </Collapse>
         </Navbar>

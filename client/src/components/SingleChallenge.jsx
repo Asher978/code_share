@@ -34,13 +34,26 @@ class SingleChallenge extends Component {
 
   componentDidMount() {
     socket.on('user join', this.handleUsers);
-    socket.on('message', this.handleRecievedMessages);
-  //   socket.on('join', this.handleJoinUser);
+    socket.on('message', this.handleRecievedMessage);
+    socket.on('code', this.handleCodeFromSockets);
+    socket.on('checked', this.codeResultCheck);
   //   socket.on('leave', this.handleLeaveUser);
   }
 
   handleUsers = (users) => {
     this.setState({users: users}); 
+  }
+
+  handleCodeFromSockets = (code) => {
+    this.setState({code: code});
+  }
+
+  codeResultCheck = (result) => {
+    this.setState({codeResult: result});
+  }
+
+  handleUpdateCodeState = (text) => {
+    socket.emit('coding', text);
   }
 
   handleRecievedMessage = (message) => {
@@ -50,10 +63,6 @@ class SingleChallenge extends Component {
   }
 
   handleMessageSubmit = (message) => {
-    let messages = this.state.messages;
-    messages.push(message);
-    console.log(messages);
-    this.setState({messages: messages});
     socket.emit('send message', message);
   }
 
@@ -72,6 +81,8 @@ class SingleChallenge extends Component {
         }
       }).catch(err => console.log(err));
     }    
+    socket.emit('test check', this.state.codeResult);
+    console.log(this.state.codeResult);
   }
 
   // handle for saving the user code
@@ -92,22 +103,14 @@ class SingleChallenge extends Component {
       mode: 'javascript',
       theme: 'monokai'
     }
-<<<<<<< HEAD
-    {console.log(this.props.user)}
-=======
-  
->>>>>>> user
-    return (
+
       <div>
         <Container>
           <Row>
             <Col md="10">
               <h1>Challenge</h1>
-<<<<<<< HEAD
               <p>{challenge[`${this.props.match.params.single}`-1].chall}</p>
-=======
               <p>{this.props.route.user}</p>
->>>>>>> user
               <Codemirror
                 value={this.state.code}
                 onChange={this.handleUpdateCodeState}
@@ -141,61 +144,3 @@ class SingleChallenge extends Component {
 }
 
 export default SingleChallenge;
-
-
-// componentDidMount() {
-  //   socket.on('code', (data) => {   
-  //     this.handleCodeFromSockets(data);
-  //   });
-
-  //   socket.on('message', (data) => {
-  //     this.handleMessageFromSockets(data);
-  //   });
-
-  //   socket.emit('join room', {
-  //     room: this.props.match.params.single,
-  //   });
-  // }
-
-  // componentWillUnmount() {
-  //   socket.emit('leave room', {
-  //     room: this.props.match.params.single,
-  //   });
-  // }
-
-  // handleCodeFromSockets = (data) => {
-  //   this.setState({
-  //     code: data.code,
-  //   });
-  // }
-
-  // handleMessageFromSockets = (data) => {
-  //   const updatedMessages = [...this.state.messages];
-  //   updatedMessages.push(data);
-  //   this.setState({
-  //     messages: updatedMessages,
-  //   });
-  // }
-
-  // handleUpdateCodeState = (text) => {
-  //   this.setState({
-  //     code: text,
-  //   });
-  //   socket.emit('coding', {
-  //     room: this.props.match.params.single,
-  //     code: this.state.code, 
-  //   });
-  // }
-
-  // handleMessageSubmit = (e) => {
-  //   e.preventDefault();
-  //   socket.emit('messaging', {
-  //     room: this.props.match.params.single,
-  //     message: this.state.message, 
-  //   });
-  //   this.setState({message: ''});
-  // }
-
-  // handleUpdateMessageState = (e) => {
-  //   this.setState({message: e.target.value});
-  // }
