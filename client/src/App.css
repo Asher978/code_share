@@ -8,6 +8,18 @@
   border-radius: 0px;
 }
 
+.main-components {
+  margin: 8vh 2vw 0;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 999;
+}
+
 .content {
   margin-top: 30vh;
 }
@@ -23,36 +35,34 @@ div.container {
 div.CodeMirror {
   margin: 5.5% 2%;
   height: 71.5vh;
-  width: 75vw;
+  width: 72vw;
   font-size: 1.3em;
 }
 
-.chatbox {
-  margin-top: 12vh;
-}
-
 .users { 
-  position: fixed;
   right: 1vw;
   padding: 2%; 
-  width: 20vw; 
+  width: 100%; 
   height: 20vh;
-  border: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   overflow: scroll;
 }
 
 .chat { 
   position: fixed;
   right: 1vw;
-  top: 40vh; 
+  top: 10vh; 
   width: 20vw; 
-  height: 40vh;
+  height: 70vh;
   border: 1px solid #ddd;
+  border-radius: 5px;
   overflow: scroll;
 }
 
-.chat ul {
-  padding: 0;
+.dropdown-menu {
+  margin-right: 75vw;
+  border: none;
+  width: 10px;
 }
 
 .form-inline {
@@ -61,16 +71,8 @@ div.CodeMirror {
   bottom: 10vh;
 }
 
-.textbox { 
-  border: 1px solid #bbb; 
-  border-radius: 0;
-  padding: 1.5vh 1.62vw; 
-}
-
-.chatbutton { 
-  border: 1px solid #bbb;
-  padding: 1.5vh 1.18vw; 
-  border-radius: 0;
+.messages {
+  padding: 1vh;
 }
 
 .chat li { 
@@ -83,7 +85,6 @@ div.CodeMirror {
   border: 1px solid #dfdfdf;
   word-break: break-all;
 }
-
 
 ::-webkit-scrollbar {
   display: none;
