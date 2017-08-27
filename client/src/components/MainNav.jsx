@@ -6,11 +6,10 @@ import {
   NavbarBrand, 
   Nav, 
   NavItem, 
-  NavLink, 
-  NavDropdown,
-  DropdownToggle, 
-  DropdownMenu,
-  DropdownItem,
+  NavLink,
+  Popover,
+  PopoverContent,
+  Button, 
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -20,6 +19,7 @@ class Navigation extends Component {
 
     this.state = {
       isOpen: false,
+      popoverOpen: false,
       dropdownToggle: false,
       class: 'up',
     };
@@ -28,6 +28,7 @@ class Navigation extends Component {
   toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen,
+      popoverOpen: !this.state.popoverOpen,
     });
   }
 
@@ -51,7 +52,7 @@ class Navigation extends Component {
     return (
       <div>
         <Navbar light toggleable>
-          <NavbarToggler right onClick={this.toggle} />
+        <NavbarToggler right onClick={this.toggle} />
           <NavbarBrand><Link to= "/" onClick={() => this.props.setPage('home')}>codeshare</Link></NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -67,10 +68,15 @@ class Navigation extends Component {
               <NavItem>
                 <NavLink><Link to= "/events" onClick={() => this.props.setPage('events')}>Events</Link></NavLink>
               </NavItem>
-                <NavLink><Link to= "/" onClick={() => this.props.setPage('logout')}>Log out</Link></NavLink>
-                <NavLink className="user" onClick={() => this.openClose()}>Hi, {this.props.user}</NavLink>
-                <NavItem className={this.state.class}>
-                  <Link to= "/" onClick={() => this.props.setPage('logout')}>Logout</Link>
+                <NavLink className="user" id="Popover1" onClick={this.toggle}>Hi, {this.props.user}</NavLink>
+                <NavItem>
+                  <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1">
+                    <PopoverContent> 
+                      <Button onClick={() => this.props.setPage('logout')}>
+                        Logout
+                      </Button>
+                  </PopoverContent>
+                  </Popover>
                 </NavItem>
             </Nav>
           </Collapse>
