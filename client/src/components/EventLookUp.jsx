@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import {
+    Form,
+    FormGroup,
+    InputGroup,
+    Input,
+    InputGroupButton,
+} from 'reactstrap';
 
 
 class EventLookUp extends Component {
@@ -19,12 +26,16 @@ class EventLookUp extends Component {
     
     render () {
         return (
-            <form onSubmit={(e) => this.props.handleEventLookUp(e, this.state.ZIP)}>
-            <label> Zip Code
-                <input type="text" maxLength='5' name="ZIP" placeholder="ZIP CODE" value={this.state.ZIP} onChange={this.handleEventLookUpChange} />
-            </label>
-            <input type="submit" value="LookUp Event" />
-            </form>
+            <div className="event-lookup">
+                <Form onSubmit={(e) => this.props.handleEventLookUp(e, this.state.ZIP)}>
+                  <FormGroup>
+                    <InputGroup>
+                        <Input type="text" maxLength='5' name="ZIP" placeholder="Search Zip Code" value={this.state.ZIP} onChange={this.handleEventLookUpChange} />
+                        <InputGroupButton color="primary">Find Events</InputGroupButton>
+                    </InputGroup>
+                  </FormGroup>
+                </Form>
+            </div>
         )
     }
 }
