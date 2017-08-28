@@ -23,7 +23,7 @@ import fileSaver from 'file-saver';
 import challenge from '../challenge/challenge';
 import { Alert } from 'reactstrap';
 
-const socket = io.connect('http://localhost:3001');
+const socket = io.connect('https://localhost:3001');
 class SingleChallenge extends Component {
   constructor(props) {
     super(props);
