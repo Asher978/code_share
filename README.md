@@ -29,7 +29,8 @@ Code Share is a platform that provide Groups an ability to code together without
   - [x] Providing tests for the code challenges 
 
 ## Our Approach
-  
+We utilized React.js for the UI. Socket.io was utilized on both sides the front and back end in order to keep sync with the server and the user. All of our API calls are being inititated from the server side to protect the API Keys. Code writen by users is being sent to the server via POST request and is being executed in a sandbox _ENV_. We utilized the CRUD functionality by giving the users an option to create their own events that are viewable to all users.  
+
 ## Sourced Technologies                  
 - [x] React.js
 - [x] Node.js
