@@ -12,6 +12,10 @@
   font-size: 7vw;
 }
 
+button {
+  cursor: pointer;
+}
+
 .main p, .main button {
   font-size: 2vh;
 }
@@ -88,6 +92,22 @@ div.CodeMirror {
   margin-right: 75vw;
   border: none;
   width: 10px;
+}
+
+.bg-container {
+  position: fixed;
+  left: 0;
+  background-color: #176F98;
+  color: #FFF;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bg-container form {
+  width: 40%;
 }
 
 .form-inline {
