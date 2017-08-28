@@ -153,7 +153,7 @@ lastname  |  TEXT NOT NULL
   *  Yarn install from the _MAIN PROJECT FOLDER & THE CLIENT FOLDER_ to install all dependencies
   *  Few Changes need to happen before you start servers:
     *  In _Client/src/components_ two files need an update. (SingleChallenge.jsx & CodeEditor.jsx) Please make the following change to line # 26 in both files.  
-    
+
     ```
     const socket = io.connect();
 
@@ -162,6 +162,7 @@ lastname  |  TEXT NOT NULL
     const socket = io.connect('http://localhost:3001');
 
     // save and run servers after this change
+    
     ```
 
 ## Road Blocks
