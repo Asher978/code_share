@@ -132,7 +132,6 @@ decideNav() {
           <Route exact path="/events" render={(match) => <Events id={this.state.user.id} match={match}/>} />
           <Route exact path="/challenges/:single" render={(props) => <SingleChallenge user={this.state.user.username} {...props}/>} />
         </div>  
-        <Footer />
       </div>
     </Router>
     );
