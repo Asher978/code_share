@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-
+import { 
+  Col, 
+  Button, 
+  Form, 
+  FormGroup, 
+  Label, 
+  Input, 
+  FormText 
+} from 'reactstrap';
 
 class Register extends Component {
   constructor() {
@@ -19,9 +27,6 @@ class Register extends Component {
   handleInputChange(e) {
     const name = e.target.name;
     const value = e.target.value;
-    // const email = e.target.email;
-    // const firstname = e.target.firstname;
-    // const lastname = e.target.lastname;
     this.setState({
       [name]: value,
     });
@@ -29,15 +34,62 @@ class Register extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={(e) => this.props.handleRegisterSubmit(e, this.state.username, this.state.password, this.state.email, this.state.firstname, this.state.lastname)}>
-          <input type='text' name='username' value={this.state.username} placeholder='Username' onChange={this.handleInputChange} />
-          <input type='password' name='password' value={this.state.password} placeholder='Password' onChange={this.handleInputChange}/>
-          <input type='email' name='email' value={this.state.email} placeholder='email' onChange={this.handleInputChange} />
-          <input type='text' name='firstname' value={this.state.firstname} placeholder='First name' onChange={this.handleInputChange} />
-          <input type='text' name='lastname' value={this.state.lastname} placeholder='Last name' onChange={this.handleInputChange} />                    
-          <input type='submit' value='Submit' />
-        </form>
+      <div className="bg-container">
+        <Form onSubmit={(e) => this.props.handleRegisterSubmit(e, this.state.username, this.state.password, this.state.email, this.state.firstname, this.state.lastname)}>
+        <FormGroup>
+          <Label for="username">Username</Label>
+          <Input 
+            type="text" 
+            name="username" 
+            id="username" 
+            value={this.state.username} 
+            placeholder="Enter Username" 
+            onChange={this.handleInputChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label for="userPassword">Password</Label>
+          <Input 
+            type="password" 
+            name="password" 
+            id="userPassword" 
+            value={this.state.password} 
+            placeholder="Enter Password" 
+            onChange={this.handleInputChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label for="userEmail">Email</Label>
+          <Input 
+            type="email" 
+            name="email" 
+            id="userEmail" 
+            value={this.state.email} 
+            placeholder="Enter An Email Address" 
+            onChange={this.handleInputChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label for="firstName">First Name</Label>
+          <Input 
+            type="text" 
+            name="firstname" 
+            id="firstName" 
+            value={this.state.firstname} 
+            placeholder="Enter First Name" 
+            onChange={this.handleInputChange} />
+        </FormGroup>
+        <FormGroup>
+          <Label for="lastName">Last Name</Label>
+          <Input 
+            type="text" 
+            name="lastname" 
+            id="lastName" 
+            value={this.state.lastname} 
+            placeholder="Enter Last Name" 
+            onChange={this.handleInputChange} />
+        </FormGroup>
+        <FormGroup>
+          <Button color="success">Submit</Button>
+        </FormGroup>
+      </Form>
       </div>
         
     )

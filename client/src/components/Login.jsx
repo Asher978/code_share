@@ -1,5 +1,14 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
+import { 
+  Col, 
+  Button, 
+  Form, 
+  FormGroup, 
+  Label, 
+  Input, 
+  FormText 
+} from 'reactstrap';
 
 class Login extends Component {
   constructor() {
@@ -20,12 +29,32 @@ class Login extends Component {
   }
   render() {
     return (
-      <div>
-        <form onSubmit= {(e) => this.props.handleLoginSubmit(e, this.state.username, this.state.password)}>
-          <input type='text' name='username' value={this.state.username} placeholder='Username' onChange={this.handleInputChange} />
-          <input type='password' name='password' value={this.state.password} placeholder='Password' onChange={this.handleInputChange}/>
-          <input type='submit' value='Log in!'/>
-        </form>
+      <div className="bg-container">
+        <Form onSubmit= {(e) => this.props.handleLoginSubmit(e, this.state.username, this.state.password)}>
+          <FormGroup>
+            <Label for="username">Username</Label>
+            <Input 
+              type="text" 
+              name="username" 
+              id="username" 
+              value={this.state.username} 
+              placeholder="Enter Username" 
+              onChange={this.handleInputChange} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="userPassword">Password</Label>
+            <Input 
+              type="password" 
+              name="password" 
+              id="userPassword" 
+              value={this.state.password} 
+              placeholder="Enter Password" 
+              onChange={this.handleInputChange} />
+          </FormGroup>
+          <FormGroup>
+            <Button color="success">Submit</Button>
+          </FormGroup>
+        </Form>
       </div>
     )
   }

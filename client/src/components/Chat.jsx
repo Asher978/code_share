@@ -1,25 +1,75 @@
-import React from 'react';
-import { Button, Form, FormGroup, Input } from 'reactstrap';
+import React, { Component } from 'react';
+import Message from './Message';
+import { 
+  Button, 
+  Form, 
+  FormGroup, 
+  Input,
+  ListGroup,
+  ListGroupItem,
+  InputGroup,
+  InputGroupButton, 
+} from 'reactstrap';
 
-const Chat = (props) => {
-  return (
-    <div className="chatbox">
-      <div className="users"></div>
+class Chat extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      text: '',
+    }
+  }
+
+  handleFormSubmit = (e) => {
+    e.preventDefault();
+    const message = {
+      user: this.props.user,
+      text: this.state.text,
+    }
+    this.props.handleMessageSubmit(message);
+    console.log(message);
+    this.setState({text: ''});
+  }
+
+  handleTextChange = (e) => {
+    this.setState({text: e.target.value});
+  }
+
+  render() {
+    return (
       <div className="chat">
-        <ul>
-          {props.messages.map((message) => {
-            return <li>{message}</li>
+        <ListGroup className="online">
+          <ListGroupItem color="success">Online Users ({this.props.online})</ListGroupItem>
+        </ListGroup>
+        <div className="users">
+          <ListGroup>
+            {this.props.users.map((user, i) => {
+              return <ListGroupItem key={i}>{user}</ListGroupItem>
+            })}   
+          </ListGroup>
+        </div>
+        <div className="messages">
+          {this.props.messages.map((message, i) => {
+            return ( 
+              <Message 
+                key={i}
+                user={message.user}
+                text={message.text} 
+              />
+            )
           })}
-        </ul>
+        </div>
+        <Form onSubmit={(e) => this.handleFormSubmit(e)} inline>
+          <FormGroup>
+            <InputGroup>
+              <Input type="text" className="textbox" value={this.state.text} onChange={this.handleTextChange} placeholder="Type Message Here" />
+              <InputGroupButton><Button color="primary">Send</Button></InputGroupButton>
+            </InputGroup>
+          </FormGroup>
+        </Form>
       </div>
-      <Form onSubmit={(e) => props.handleSubmit(e)} inline>
-        <FormGroup>
-          <Input type="text" className="textbox" value={props.value} onChange={(e) => props.handleChange(e)} placeholder="Type Message Here" />
-          <Button color="primary" className="chatbutton">Send</Button>
-        </FormGroup>
-      </Form>
-    </div>
-  )
+    )
+  }
 }
 
 export default Chat;

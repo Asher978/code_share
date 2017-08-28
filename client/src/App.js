@@ -19,6 +19,7 @@ class App extends Component {
     this.state = {
       auth: false,
       user: null,
+      username: '',
       currentPage: 'home',
     }
   }
@@ -41,6 +42,7 @@ class App extends Component {
       this.setState({
         auth: res.data.auth,
         user: res.data.user,
+        username: res.data.user.username,
         currentPage: 'home',
       });
     }).catch(err => console.log(err));
@@ -72,7 +74,7 @@ decideNav() {
        console.log(this.state.auth)
         return (
           <div>
-            <MainNav setPage={this.setPage} /> 
+            <MainNav setPage={this.setPage} user={this.state.user.username}/> 
             <Redirect to="/" />
           </div>
         )
@@ -105,7 +107,6 @@ decideNav() {
     }
   }  
 
-
   logOut = () => {
     console.log('logged out');
     axios.get('/auth/logout')
@@ -122,14 +123,16 @@ decideNav() {
     return (
       <Router >
       <div className="App">
-          {this.decideNav()}
+        {this.decideNav()}
+        <div className="main-components">
           {this.decideAuth()} 
           <Route exact path= "/" component={Home} />
           <Route exact path="/challenges" component={Challenges} />
-          <Route exact path="/codeEditor" component={CodeEditor} />          
-          <Route exact path="/events" render={(match) => <Events id={this.state.user.id} match={match}/>}/>
-          <Route exact path="/challenges/:single" component={SingleChallenge} />
-          <Footer />
+          <Route exact path="/codeEditor" render={(props) => <CodeEditor user={this.state.user.username} {...props}/>} />         
+          <Route exact path="/events" render={(match) => <Events id={this.state.user.id} match={match}/>} />
+          <Route exact path="/challenges/:single" render={(props) => <SingleChallenge user={this.state.user.username} {...props}/>} />
+        </div>  
+        <Footer />
       </div>
     </Router>
     );
