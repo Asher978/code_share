@@ -102,6 +102,8 @@ lastname  |  TEXT NOT NULL
 </details>
 <details>
 <summary>Back End</summary>
+
+
 ```
 |_ controllers
 |  |_ events-controller.js
@@ -136,6 +138,7 @@ lastname  |  TEXT NOT NULL
 |    |_ meetup-helper
 |
 |_ app.js
+
 ```
 
 </details>
