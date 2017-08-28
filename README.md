@@ -71,6 +71,9 @@ firstname  |  TEXT NOT NULL
 lastname  |  TEXT NOT NULL
 
 ## Snap Shot of File Structure (Front End)
+<details>
+<summary>FrontEnd</summary>
+
 ```
 |_ client
     |_ node_modules
@@ -96,5 +99,6 @@ lastname  |  TEXT NOT NULL
         |__ index.js
         |__ index.css
 ```
+</details>
 
 ## Road Blocks
