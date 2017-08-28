@@ -117,7 +117,7 @@ class CodeEditor extends Component {
             <Col md="10">
               <div className="main-challenge">
               <h1>Challenge</h1>
-              {"Coding " + this.state.code}
+        
               <Codemirror
                 value={this.state.code}
                 onChange={this.handleUpdateCodeState}
