@@ -11,7 +11,7 @@ August, 2107
 ![code-share](https://thumbs.gfycat.com/DirtyPlasticAndeancat-max-1mb.gif)
 
 ## Description 
-Code Share is a platform that provide Groups an ability to code together without being together in one place. The app has an option to work on coding challenges which include _TESTS_ or to work/share individual code collabratively. Users can also save the writen code in a JS format for their reference. The app provides a _CODE EDITOR_ sourced from another NPM PACKAGE _CODEMIRROR_. The app will also provide a feature where USERS can find coding events based on the USER input language. USERS will also be able to create their own events. The app will provide a feature for _AUTHS_ thus enabling the USERS to post specific events connected to their profile.
+Code Share is a platform that provide Groups an ability to code together without being together in one place. The app has an option to work on coding challenges which include _TESTS_ or to work/share individual code collabratively. Users can also save the writen code in a JS format for their reference. The app provides a _CODE EDITOR_ sourced from another NPM PACKAGE _CODEMIRROR_. The app also provides a feature where USERS can find coding events based on the USER input language. USERS will also be able to create their own events. These events are viewable by all USERS. The app has a feature for _AUTHS_ thus enabling the USERS to create a unique profile.
 
 ## User Stories ( M V P )
   *  USER should be able to create a USER NAME ( NO AUTHS )
@@ -21,7 +21,7 @@ Code Share is a platform that provide Groups an ability to code together without
   *  USER should be abe to view who is in the ROOM and who is typing should show
   *  USER should be able to CREATE or SEARCH coding events based on the language they provided
 
-## BONUS FEATURES
+## BONUS FEATURES (All acomplished)
   - [x] AUTHS - option to REGISTER and LOGIN
   - [x] CHAT window in the ROOMS 
   - [x] Providing tests for the code challenges 
