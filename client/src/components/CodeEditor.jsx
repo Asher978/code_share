@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
 import Codemirror from '@skidding/react-codemirror';
-import { Container, Row, Col } from 'reactstrap';
+import { 
+  Container, 
+  Row, 
+  Col,
+  Button, 
+  Modal, 
+  ModalHeader, 
+  ModalBody, 
+  ModalFooter, 
+  Input, 
+  InputGroup,
+  InputGroupButton,
+  Alert,
+} from 'reactstrap';
 import Chat from './Chat';
 import 'codemirror/lib/codemirror.css';  
 import 'codemirror/theme/monokai.css';  
@@ -17,58 +30,56 @@ class CodeEditor extends Component {
 
     this.state = {
       code: '',
-      codeResult: '',
-      message: '',
+      codeResult: 'Result will be displayed here',
+      text: '',
       messages: [],
+      users: [],
       fileName: '',
+      modal: false,
     }
   }
 
+  componentWillMount() {
+    this.props.user ? 
+      socket.emit('user join', this.props.user) : 
+    console.log('Null user');
+  }
+
   componentDidMount() {
-    socket.on('code', (data) => {   
-      this.handleCodeFromSockets(data);
-    });
-
-    socket.on('message', (data) => {
-      this.handleMessageFromSockets(data);
-    });
-
-    socket.emit('join room', {
-      room: this.props.match.params.single,
-    });
+    socket.on('user join', this.handleUsers);
+    socket.on('message', this.handleRecievedMessage);
+    socket.on('code', this.handleCodeFromSockets);
+    socket.on('checked', this.codeResultCheck);
+  //   socket.on('leave', this.handleLeaveUser);
   }
 
-  componentWillUnmount() {
-    socket.emit('leave room', {
-      room: this.props.match.params.single,
-    });
+  handleUsers = (users) => {
+    this.setState({users: users}); 
   }
 
-  handleCodeFromSockets = (data) => {
-    this.setState({
-      code: data.code,
-    });
+  handleCodeFromSockets = (code) => {
+    this.setState({code: code});
   }
 
-  handleMessageFromSockets = (data) => {
-    const updatedMessages = [...this.state.messages];
-    updatedMessages.push(data);
-    this.setState({
-      messages: updatedMessages,
-    });
+  codeResultCheck = (result) => {
+    this.setState({codeResult: result});
   }
 
   handleUpdateCodeState = (text) => {
-    this.setState({
-      code: text,
-    });
-    socket.emit('coding', {
-      room: this.props.match.params.single,
-      code: this.state.code, 
-    });
+    this.setState({code: text});
+    socket.emit('coding', text);
   }
 
-  // evaluating the code from the editor and setting state of the result
+  handleRecievedMessage = (message) => {
+    let messages = this.state.messages;
+    messages.push(message);
+    this.setState({messages: messages});
+  }
+
+  handleMessageSubmit = (message) => {
+    socket.emit('send message', message);
+  }
+
   handleExecuteCode = (code) => {
     if(code) {
       axios.post('/editor', {
@@ -80,10 +91,6 @@ class CodeEditor extends Component {
     }    
   }
 
-
-  handleUpdateMessageState = (e) => {
-    this.setState({message: e.target.value});
-  }
   // handle for saving the user code
   handleSaveCode = (code, filename) => {
     console.log(code, filename);
@@ -94,15 +101,6 @@ class CodeEditor extends Component {
   // handle for the change on filename input
   handleSaveCodeChange = (e) => {
     this.setState({ fileName: e.target.value })
-  }
-
-  handleMessageSubmit = (e) => {
-    e.preventDefault();
-    socket.emit('messaging', {
-      room: this.props.match.params.single,
-      message: this.state.message, 
-    });
-    this.setState({message: ''});
   }
 
   render() {
@@ -117,25 +115,52 @@ class CodeEditor extends Component {
         <Container>
           <Row>
             <Col md="10">
+              <div className="main-challenge">
               <h1>Challenge</h1>
+              {"Coding " + this.state.code}
               <Codemirror
                 value={this.state.code}
                 onChange={this.handleUpdateCodeState}
                 options={options}
               />
-              <button onClick={() => this.handleExecuteCode(this.state.code)}>EXECUTE</button>
-              <textarea cols='30' rows='5' value={'Result: ' + this.state.codeResult} />
-              <input type="text" value={this.state.fileName} 
-              placeholder="Enter file name"
-              onChange={this.handleSaveCodeChange}/>
-              <button onClick={() => this.handleSaveCode(this.state.code)}>
-              Save Code</button>  
+
+              <Alert color="warning">
+                <strong>{this.state.codeResult}</strong>
+              </Alert>
+
+              <InputGroup className="test">
+                <InputGroupButton className="cta-buttons" color="success" onClick={this.toggle}>Download Code</InputGroupButton>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                  <ModalHeader toggle={this.toggle}>Save Code Locally</ModalHeader>
+                  <ModalBody>
+                    <p>You can even save your files offline to use in any code editor! <br />
+                      Isn't that sweet!</p>
+                    <Input 
+                      placeholder="Enter file name" 
+                      value={this.state.fileName} 
+                      onChange={this.handleSaveCodeChange}
+                      />
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="success" onClick={() => this.handleSaveCode(this.state.code, this.state.fileName)}>Download</Button>
+                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                  </ModalFooter>
+                </Modal>
+                <InputGroupButton className="cta-buttons" color="primary" onClick={() => this.handleExecuteCode(this.state.code)}>Execute Code</InputGroupButton>
+              </InputGroup>
+
+              </div>
             </Col>
+
             <Col md="2">
-              <Chat handleSubmit={this.handleMessageSubmit} 
-                    value={this.state.message} 
-                    handleChange={this.handleUpdateMessageState}
-                    messages={this.state.messages}
+              <Chat 
+                handleMessageSubmit={this.handleMessageSubmit} 
+                value={this.state.message} 
+                handleChange={this.handleUpdateMessageState}
+                messages={this.state.messages}
+                users={this.state.users}
+                user={this.props.user}
+                online={this.state.users.length}
               />
             </Col>
           </Row>
