@@ -58,7 +58,9 @@ We utilized React.js for the UI. Socket.io was utilized on both sides the front 
 
 ## Code Snipets
 
-Code Eval (Backend)
+<details>
+<summary>Code Eval (Backend)</summary>
+
 ```
 const vm = require('vm');
 const assert = require('assert');
@@ -84,7 +86,11 @@ let codeEval = (req, res, next) => {
 }
 
 ```
-Code Eval (Front End)
+</details>
+
+<details>
+<summary>Code Eval (Front End)</summary>
+
 ```
 // evaluating the code from the editor and setting state of the result
   handleExecuteCode = (code, test) => {
@@ -104,7 +110,12 @@ Code Eval (Front End)
     }    
   }
 ```
-Socket.io 
+</details>
+
+
+<details>
+<summary>Socket.io</summary>
+
 ```
 FRONT END
 componentWillMount() {
@@ -177,6 +188,7 @@ componentWillMount() {
   });
 });
 ```
+</details>
 
 ## ERDs
 
