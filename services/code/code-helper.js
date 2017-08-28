@@ -5,6 +5,9 @@ const chai = require('chai');
 const checkError = require('check-error');
 
 
+
+
+
 // evaluation of code with challenges and testing
 let codeEval = (req, res, next) => {
     let result;
@@ -22,15 +25,16 @@ let codeEval = (req, res, next) => {
     next();
 }
 
-// evaluation of code withour testing and challenges
+// evaluation of code without testing and challenges
 let codeEvalWithoutChallenge = (req, res, next) => {
     let result;
     let code = req.body.code;
-    const sandbox = {};
+    const sandbox = { mocha: mocha, expect: expect, assert: assert};
 
     vm.createContext(sandbox);
     try {
         result = vm.runInContext(code, sandbox);
+        console.log(result);
         res.locals.ref = result;  
     } catch (e) {
         result = checkError.getMessage(e);
