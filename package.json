@@ -26,6 +26,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "debugger": "DEBUG=*:* npm run dev"
+    "debugger": "DEBUG=*:* npm run dev",
+    "deploy": "cd client && yarn build && cp -a ./build/ ../public/"
   }
 }
