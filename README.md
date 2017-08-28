@@ -56,6 +56,56 @@ We utilized React.js for the UI. Socket.io was utilized on both sides the front 
 - [x] Google (Provided Lat & Lng from User Input ZIP)
 - [x] Meetup (Provided Events on requested ZIP CODE)
 
+## Code Snipets
+
+Code Eval (Backend)
+```
+const vm = require('vm');
+const assert = require('assert');
+const expect = require('chai').expect;
+const chai = require('chai');
+const checkError = require('check-error');
+
+// evaluation of code with challenges and testing
+let codeEval = (req, res, next) => {
+    let result;
+    let code = req.body.code;
+
+    const sandbox = { assert: assert, expect: expect, checkError: checkError, chai: chai };
+    vm.createContext(sandbox);
+    try {
+        result = vm.runInContext(code, sandbox);
+        res.locals.ref = result;  
+    } catch (e) {
+        result = checkError.getMessage(e);
+        res.locals.ref = result;
+    }
+    next();
+}
+
+```
+Code Eval (Front End)
+```
+// evaluating the code from the editor and setting state of the result
+  handleExecuteCode = (code, test) => {
+    if(code + test) {
+      axios.post('/code', {
+        code: code + test,
+      }).then(res => {
+        let obj = res.data.data;
+        console.log('frontend received--->', obj)
+        if (obj.__flags) {
+          this.setState({ codeResult: 'Nice Work! Test Passed!', alert: 'success' })
+        } else {
+          this.setState({ codeResult: 'Error: ' + res.data.data, 'alert': 'danger' })
+        }
+        socket.emit('test check', this.state.codeResult);
+      }).catch(err => console.log(err));
+    }    
+  }
+```
+
+
 ## ERDs
 
 Events  |  Type  |
