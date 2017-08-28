@@ -23,7 +23,7 @@ Code Share is a platform that provide Groups an ability to code together without
   *  USER should be abe to view who is in the ROOM and who is typing should show
   *  USER should be able to CREATE or SEARCH coding events based on the language they provided
 
-## BONUS FEATURES (All acomplished)
+## BONUS FEATURES (All Accomplished)
   - [x] AUTHS - option to REGISTER and LOGIN
   - [x] CHAT window in the ROOMS 
   - [x] Providing tests for the code challenges 
@@ -150,3 +150,11 @@ lastname  |  TEXT NOT NULL
 </details>
 
 ## Road Blocks
+  *  Getting the tests to work in the _SANDBOX ENV_ especially having 4 different NPM Packages work together
+  *  Sockets.io to update and reflect the changes once a new USER joins the room
+  *  Redirecting to HOME page after a USER logs in
+
+## Loose Ends
+  *  When a new EVENT is created by a USER, the change should reflect without refreshing the page
+  *  Integrating Mocha Tests for the challenges
+   
