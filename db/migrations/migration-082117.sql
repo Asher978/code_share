@@ -1,4 +1,4 @@
-\c code_share;
+-- \c code_share;
 
 CREATE TABLE IF NOT EXISTS events (
     id SERIAL PRIMARY KEY,
