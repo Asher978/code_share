@@ -149,7 +149,8 @@ lastname  |  TEXT NOT NULL
 
 </details>
 
-![RoadBlocks](http://images.clipartpanda.com/roadblock-clipart-roadblock.gif)
+![RoadBlocks](http://apps.frontline.org/police-stops/img/indianapolis.gif)
+
 ## Road Blocks
   *  Getting the tests to work in the _SANDBOX ENV_ especially having 4 different NPM Packages work together
   *  Sockets.io to update and reflect the changes once a new USER joins the room
