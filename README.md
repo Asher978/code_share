@@ -104,7 +104,79 @@ Code Eval (Front End)
     }    
   }
 ```
+Socket.io 
+```
+FRONT END
+componentWillMount() {
+    this.props.user ? 
+      socket.emit('user join', this.props.user) : 
+    console.log('Null user');
+  }
 
+  componentDidMount() {
+    socket.on('user join', this.handleUsers);
+    socket.on('message', this.handleRecievedMessage);
+    socket.on('code', this.handleCodeFromSockets);
+    socket.on('checked', this.codeResultCheck);
+  //   socket.on('leave', this.handleLeaveUser);
+  }
+
+  handleUsers = (users) => {
+    this.setState({users: users}); 
+  }
+
+  handleCodeFromSockets = (code) => {
+    this.setState({code: code});
+  }
+
+  codeResultCheck = (result) => {
+    this.setState({codeResult: result});
+  }
+
+  handleUpdateCodeState = (text) => {
+    socket.emit('coding', text);
+    this.setState({code: text});
+  }
+
+  handleRecievedMessage = (message) => {
+    let messages = this.state.messages;
+    messages.push(message);
+    this.setState({messages: messages});
+  }
+
+  handleMessageSubmit = (message) => {
+    socket.emit('send message', message);
+  }
+
+  BACK END
+  io.on('connection', (socket) => {
+  console.log('A new connection', socket.id);
+
+  socket.on('send message', (message) => {
+    messages.push(message);
+    io.emit('message', {
+      user: message.user,
+      text: message.text,
+    });
+  });
+
+  socket.on('user join', (user) => {
+    if (users.indexOf(user) === -1) {
+      users.push(user);
+      console.log(users);
+    } else console.log('already exist');  
+    io.emit('user join', users);
+  });
+
+  socket.on('coding', (code) => {
+    socket.broadcast.emit('code', code);
+  });
+
+  socket.on('test check', (result) => {
+    io.emit('checked', result);
+  });
+});
+```
 
 ## ERDs
 
