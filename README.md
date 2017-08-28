@@ -22,9 +22,9 @@ Code Share is a platform that provide Groups an ability to code together without
   *  USER should be able to CREATE or SEARCH coding events based on the language they provided
 
 ## BONUS FEATURES
-  *  AUTHS - option to REGISTER and LOGIN
-  *  CHAT window in the ROOMS
-  *  Providing tests for the code challenges
+  *  AUTHS - option to REGISTER and LOGIN - [x]
+  *  CHAT window in the ROOMS - [x]
+  *  Providing tests for the code challenges - [x]
 
 ## Our Approach
   
