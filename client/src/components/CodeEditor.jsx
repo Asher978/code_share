@@ -87,6 +87,7 @@ class CodeEditor extends Component {
       }).then(res => {
         console.log('frontend received--->', res.data.data)
         this.setState({ codeResult: res.data.data })
+        socket.emit('test check', this.state.codeResult);
       }).catch(err => console.log(err));
     }    
   }
@@ -96,11 +97,18 @@ class CodeEditor extends Component {
     console.log(code, filename);
     let blob = new Blob([code], {type: 'text/javascript'});
     fileSaver.saveAs(blob, filename+'.js');
+    console.log('clicked');
   }
   
   // handle for the change on filename input
   handleSaveCodeChange = (e) => {
     this.setState({ fileName: e.target.value })
+  }
+
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
   }
 
   render() {
@@ -116,7 +124,7 @@ class CodeEditor extends Component {
           <Row>
             <Col md="10">
               <div className="main-challenge">
-              <h1>Challenge</h1>
+              <h1>Code Playground</h1>
         
               <Codemirror
                 value={this.state.code}

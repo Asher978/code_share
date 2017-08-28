@@ -96,11 +96,20 @@ class EventList extends Component {
 
     render () {
         return (
-            <div>
-                <EventAddForm handleEventSubmit={this.handleEventSubmit} />
+            <div className="bg-events">
+                <div className="events-banner"></div>
                 <EventLookUp handleEventLookUp={this.handleEventLookUp} />
-                {this.renderEvents()}
-                {this.renderApiEventList()}
+                <EventAddForm handleEventSubmit={this.handleEventSubmit} />
+                <div className="event-render">
+                    <div className="user-events">
+                        <h4>User Events</h4>
+                        {this.renderEvents()}
+                    </div>
+                    <div className="community-events">
+                        <h4>Community Events</h4>
+                        {this.renderApiEventList()}
+                    </div>
+                </div>
             </div>
         )
     }

@@ -12,6 +12,22 @@
   font-size: 7vw;
 }
 
+.sign {
+  color: #FFF;
+}
+
+.sign:hover {
+  color: #FFF;
+}
+
+a {
+  color: #272822;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
 button {
   cursor: pointer;
 }
@@ -44,10 +60,6 @@ button {
   cursor: pointer;
 }
 
-footer {
-  margin-left: 3vw;
-}
-
 div.container {
   margin: 0;
 }
@@ -64,6 +76,59 @@ div.CodeMirror {
   font-size: 1.3em;
 }
 
+.events-banner {
+  background: url('./images/events.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  left: 0;
+  top: 0;
+  margin-top: 5vh;
+  position: absolute;
+  height: 53vh;
+  width: 100%;
+  z-index: -1;
+}
+
+.bg-events {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-event {
+  position: absolute;
+  z-index: 99;
+  right: 3vw;
+  top: 10vh;
+}
+
+.event-lookup {
+  margin-top: 47vh;
+  margin-bottom: -25%;
+}
+
+.event-render {
+  margin-top: 50vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+.user-events {
+  overflow: scroll;
+  height: 40vh;
+  width: 45%;
+}
+
+.community-events {
+  overflow: scroll;
+  height: 40vh;
+  width: 45%;
+}
+
 .alert {
   width: 100%;
 }
@@ -75,6 +140,27 @@ div.CodeMirror {
   height: 20vh;
   border-bottom: 1px solid #ddd;
   overflow: scroll;
+}
+
+.challenge-header {
+  margin-right: 1vw;
+}
+
+.bg-challenges {
+  height: 100vh;
+  width: 100%;
+  background-color: #5CB85C;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.bg-challenges h4 {
+  margin-bottom: 3vh;
 }
 
 .chat { 
@@ -97,8 +183,7 @@ div.CodeMirror {
 .bg-container {
   position: fixed;
   left: 0;
-  background-color: #176F98;
-  color: #FFF;
+  background-color: #0275D8;
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -131,8 +216,12 @@ div.CodeMirror {
   word-break: break-all;
 }
 
-.result {
-  background-color: #272822;
+footer {
+  position: absolute;
+  bottom: 0;
+  padding: 1%;
+  width: 100%;
+  margin-top: 5vh;
 }
 
 ::-webkit-scrollbar {
