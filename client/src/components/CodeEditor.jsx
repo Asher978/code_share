@@ -23,7 +23,7 @@ import axios from 'axios';
 import fileSaver from 'file-saver';
 
 
-const socket = io.connect('https://localhost:3001');
+const socket = io.connect();
 class CodeEditor extends Component {
   constructor(props) {
     super(props);
