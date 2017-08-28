@@ -43,6 +43,18 @@ class EventList extends Component {
         }).catch(err => console.log(err));
     }
 
+    handleDeleteEvent = (id) => {
+        axios.delete(`/events/${id}`) 
+      .then(res => {
+        console.log(res);
+        this.setState({
+            eventData: res.data.data,
+        });
+    }).catch(err => {
+        console.log(err);
+    });
+    }
+
     // ZIP Code Validation and Getting data back from google and Meetup
     handleEventLookUp(e, ZIP) {
         e.preventDefault();        
@@ -75,6 +87,9 @@ class EventList extends Component {
                             <p>{event.description}</p>
                             <p>{new Date(event.date).toString().split(" ").splice(0,4).join(" ")}</p>
                             <p>{event.time}</p>
+                            <button type="button" onClick={() => this.handleDeleteEvent(event.id)} className="btn btn-default" aria-label="Right Align">
+                                <span className="glyphicon glyphicon-trash glyphicon-align-right" aria-hidden="true"></span>
+                            </button>
                         </main>
                     )
                 }))}
