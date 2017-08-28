@@ -28,7 +28,7 @@ class EventList extends Component {
             }).catch(err => console.log(err));
     }
 
-    handleEventSubmit = (e, title, description, date, time, id, name) => {
+    handleEventSubmit = (e, title, description, date, time, id) => {
         e.preventDefault();
         axios.post('/events', {
             title,
@@ -36,7 +36,6 @@ class EventList extends Component {
             date,
             time,
             id: this.props.id,
-            name: this.props.name,
         }).then(res => {
             this.setState({
                 eventData: res.data.data,
