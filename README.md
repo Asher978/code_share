@@ -70,9 +70,9 @@ email  |  VARCHAR(255) UNIQUE NOT NULL
 firstname  |  TEXT NOT NULL
 lastname  |  TEXT NOT NULL
 
-## Snap Shot of File Structure (Front End)
+## Snap Shot of File Structure (Front End & Back End)
 <details>
-<summary>FrontEnd</summary>
+<summary>Front End</summary>
 
 ```
 |_ client
@@ -99,6 +99,45 @@ lastname  |  TEXT NOT NULL
         |__ index.js
         |__ index.css
 ```
+</details>
+<details>
+<summary>Back End</summary>
+```
+|_ controllers
+|  |_ events-controller.js
+|  |_ users-controller.js
+|
+|_ db
+|  |_ migrations
+|  |  |_ migration-082117.sql
+|  |_ config.js
+|
+|_ models
+|  |_ events.js
+|  |_ user.js
+|
+|_ routes
+|  |_ auth-routes.js
+|  |_ code-routes.js
+|  |_ event-routes.js
+|  |_ meetup-routes.js
+|  |_ user-routes.js
+|
+|_ services
+|  |_ auth
+|  |  |_ auth-helpers.js
+|  |  |_ local.js
+|  |  |_ passport.js
+|  |
+|  |_ code
+|  |  |_ code-helper.js
+|  |
+|  |_ meetup
+|    |_ meetup-helper
+|
+|_ app.js
+```
+
 </details>
 
 ## Road Blocks
