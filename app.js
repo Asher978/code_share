@@ -36,6 +36,11 @@ server.listen(PORT, () => {
     console.log(`Alive on port ${PORT}`);
 });
 
+//index route
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // adding events routes
 const eventRoutes = require('./routes/event-routes');
 app.use('/events', eventRoutes);
