@@ -24,7 +24,7 @@ Code Share is a platform that provide Groups an ability to code together without
 ## BONUS FEATURES
   *  AUTHS - option to REGISTER and LOGIN
   *  CHAT window in the ROOMS
-  *  PROVIDING TESTS FOR THE 
+  *  Providing tests for the code challenges
 
 ## Our Approach
   
@@ -61,7 +61,8 @@ date  |  DATE
 time  |  TIME
 user_id  |  INTEGER REFERENCES users(id)
 
-Users  |  Type
+Users  |  Type  | 
+---  |  ---  |
 ID  |  SERIAL PRIMARY KEY
 username  |  VARCHAR(255) UNIQUE NOT NULL
 password_digest  |  TEXT NOT NULL
@@ -70,6 +71,9 @@ firstname  |  TEXT NOT NULL
 lastname  |  TEXT NOT NULL
 
 ## Snap Shot of File Structure (Front End)
+<details>
+<summary>FrontEnd</summary>
+
 ```
 |_ client
     |_ node_modules
@@ -95,5 +99,6 @@ lastname  |  TEXT NOT NULL
         |__ index.js
         |__ index.css
 ```
+</details>
 
 ## Road Blocks
