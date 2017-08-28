@@ -150,6 +150,7 @@ lastname  |  TEXT NOT NULL
 </details>
 
 ## Road Blocks
+![Road Blocks](http://images.clipartpanda.com/roadblock-clipart-roadblock.gif)
   *  Getting the tests to work in the _SANDBOX ENV_ especially having 4 different NPM Packages work together
   *  Sockets.io to update and reflect the changes once a new USER joins the room
   *  Redirecting to HOME page after a USER logs in
