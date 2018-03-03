@@ -310,4 +310,9 @@ lastname  |  TEXT NOT NULL
 ## Loose Ends
   *  When a new EVENT is created by a USER, the change should reflect without refreshing the page
   *  Integrating Mocha Tests for the challenges
+
+## Planned improvements / Bugs Fixes
+
+[List of Bugs / Future Improvements](https://github.com/Asher978/code_share/projects/2)
+
    
