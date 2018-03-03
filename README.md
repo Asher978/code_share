@@ -315,4 +315,4 @@ lastname  |  TEXT NOT NULL
 
 [List of Bugs / Future Improvements](https://github.com/Asher978/code_share/projects/2)
 
-   
+  * Have an idea or a solution to the current bugs. Open up a PR and share.
